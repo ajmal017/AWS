@@ -3,7 +3,7 @@
 |Module|
 |------------- |
 | 
-|[IAM](##%20IAM%20-%20Identity%20and%20Access%20Management)|
+|[IAM](## IAM - Identity and Access Management)|
 |VPC|
 |SNS|
 |SQS|
