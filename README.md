@@ -30,7 +30,7 @@
 ## IAM - Identity and Access Management
 ==================================================
 
-=======================================================================================================================================================================================================================================
+
 IAM : Identity and Access Management
 -	IAM is used to control who is authenticated (signed in) and authorized (has permissions) to use AWS resources.
 -	IAM allows you to manage users and thier level of access to the AWS console using groups and policies
@@ -99,8 +99,8 @@ IAM : Identity and Access Management
 	 -  Setup password rotation policy and Configure a Strong Password Policy for Your Users
 	 -  Use Roles for Applications That Run on Amazon EC2 Instances
  
-
+=======================================================================================================================================
    
-=======================================================================================================================================================================================================================================	
+
   
 
