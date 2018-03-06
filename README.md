@@ -37,11 +37,11 @@ IAM : Identity and Access Management
 
 - Critical Terms
 	 -  IAM consists of the following
-	 -  Users    :  End users / people.
-	 -  Groups   :  Collection of users. Users having one set of permissions.
-	 -  Roles    :  An AWS identity with permission policies that determine what the identity can and cannot do in AWS.
-				    However, instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it
-	 -  Policies :  Document (JSON format) that defines one or more permissions – assign to user or groups
+	 --  Users    :  End users / people.
+	 --  Groups   :  Collection of users. Users having one set of permissions.
+	 --  Roles    :  An AWS identity with permission policies that determine what the identity can and cannot do in AWS.
+	  	         However, instead of being uniquely associated with one person, a role is intended to be assumable by anyone who needs it
+	 --  Policies :  Document (JSON format) that defines one or more permissions – assign to user or groups
 
 - What are IAM roles?
 	- IAM roles are a secure way to grant permissions to entities that you trust. Examples of entities include the following:
