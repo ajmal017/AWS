@@ -13,34 +13,10 @@
 
  AWS Modules|
 --- |
-[Identity Access Management (IAM)](https://github.com/Girish400/AWS/blob/master/README.md#iam---identity-and-access-management) |
-VPC|
+[IAM - Identity and Access Management](https://github.com/Girish400/AWS/blob/master/README.md#iam---identity-and-access-management) |
+[VPC][VPC - Virtual Private Cloud]|
 ---
 =================================================================================
-|Module|
-|------------- |
-| 
-|[IAM](## IAM - Identity and Access Management)|
-|VPC|
-|SNS|
-|SQS|
-|Kinesis|
-|CloudWatch|
-|CloudTrail|
-|API - Gateway|
-|Lambda|
-|CloudFromtaion|
-|EC2|
-|S3|
-|Glacier|
-|EFS|
-|RDS|
-|Route53|
-|AWS Config|
-|DynoamoDB|
-|CloudFront|
-
-
 
 
 
@@ -120,7 +96,7 @@ VPC|
   
 
   
-VPC (Virtual Private Cloud)
+### VPC - Virtual Private Cloud
 	-  VPC is a virtual network in the AWS cloud
 	-  Amazon VPC lets you provision a logically isolated section of the Amazon Web Services (AWS) cloud where you can launch AWS resources in a virtual network that you define.
 	-  Virtual data center in the cloud. You can have multiple VPC's per region. VPC's can also be connected to each other via VPC peering
