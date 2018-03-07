@@ -89,10 +89,13 @@
 	 -  Use Roles for Applications That Run on Amazon EC2 Instances
  
 
-   											          [Top][#aws-certification-notes]
-												  [#aws-certification-notes]
-												  [Top](#aws-certification-notes)
+   											          
 =================================================================================
+[Top][#aws-certification-notes]
+
+[#aws-certification-notes]
+
+[Top](#aws-certification-notes)
   
 
  
