@@ -16,7 +16,7 @@
 
 |Module|# Lectures|Duration|
 |------------- |:-------------:| -----:|
-|Identity Access Management (IAM) | 4 |33:59|
+|[Identity Access Management (IAM)](https://github.com/Girish400/AWS/blob/master/README.md#iam---identity-and-access-management) | 4 |33:59|
 |Additional Exam Tips |9 | 53:39|
 
 
