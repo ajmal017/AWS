@@ -9,6 +9,30 @@
 
 ## AWS Certification Notes
 
+## Course Video Durations
+
+### Can help you plan your study based on your time availability.
+
+
+|Module|# Lectures|Duration|
+|------------- |:-------------:| -----:|
+|Introduction To The Course | 3 |29:38|
+|AWS - 10,000 Feet Overview|6 |01:19:13|
+|Identity Access Management (IAM) | 4 |33:59|
+|AWS Object Storage and CDN - S3, Glacier and CloudFront |14  |02:47:10|
+|EC2 - The Backbone of AWS|21 | 04:35:38|
+|Route53 | 9 |01:06:33|
+|Databases on AWS | 8 | 01:30:45|
+|VPC| 10 | 01:40:37|
+|Application Services | 6 |43:54|
+|Kinesis | 2 |15:19|
+|The Real World - Creating a fault tolerant Word Press Site | 6 | 01:14:55|
+|Preparing for the Exam - White Paper Reviews |7 |54:36|
+|The Well Architected Framework |6 | 01:18:32|
+|Additional Exam Tips |9 | 53:39|
+
+
+# AWS 10000 Feet Overview
 
 
 =================================================================================
