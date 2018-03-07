@@ -14,7 +14,7 @@
 
 >[AWS Practice Questions](https://www.whizlabs.com/)
 
->[AWS Official Documentation](https://aws.amazon.com/documentation/ "title" target="_blank")
+>[AWS Official Documentation](https://aws.amazon.com/documentation/)
 
 > [AWS FAQ & Interview Preparation](https://docs.google.com/spreadsheets/d/1IXxlZ674sxfCdDvV8iAj2DBQV_ow1QIEpvYn8yJC4J4/edit?ts=5a9f3458#gid=800669335) 
 
