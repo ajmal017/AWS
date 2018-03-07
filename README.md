@@ -90,12 +90,7 @@
  
 
    											          
-=================================================================================
-[Top][#aws-certification-notes]
-
-[#aws-certification-notes]
-
-[Top](#aws-certification-notes)
+=============================================================================  [Top](#aws-certification-notes)
   
 
  
