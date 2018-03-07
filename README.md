@@ -14,7 +14,7 @@
  AWS Modules|
 --- |
 [IAM - Identity and Access Management](https://github.com/Girish400/AWS/blob/master/README.md#iam---identity-and-access-management) |
-[VPC - Virtual Private Cloud](#vpc - virtual-private-cloud)|
+[VPC - Virtual Private Cloud](#vpc---virtual-private-cloud)|
 ---
 
 
