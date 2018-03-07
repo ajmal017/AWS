@@ -16,6 +16,8 @@
 
 >[AWS Official Documentation](https://aws.amazon.com/documentation/)
 
+<a href="https://aws.amazon.com/documentation/" target="_blank">AWS Official Documentation</a>
+
 > [AWS FAQ & Interview Preparation](https://docs.google.com/spreadsheets/d/1IXxlZ674sxfCdDvV8iAj2DBQV_ow1QIEpvYn8yJC4J4/edit?ts=5a9f3458#gid=800669335) 
 
 > [GitHub Link for AWS notes](https://github.com/agasthik/aws-csa-2017#aws-csa-2017-study-guide)
