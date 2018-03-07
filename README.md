@@ -5,6 +5,7 @@
 
 > [GitHub Link for AWS notes](https://github.com/agasthik/aws-csa-2017#aws-csa-2017-study-guide)
 
+>[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 ---
 
 ## AWS Certification Notes
