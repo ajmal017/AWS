@@ -6,10 +6,9 @@
 
 [GitHub Link for AWS notes](https://github.com/agasthik/aws-csa-2017#aws-csa-2017-study-guide)
 
-```
-
+``
 $$
-#  AWS Certification Notes:
+AWS Certification Notes:
 $$
 
 
