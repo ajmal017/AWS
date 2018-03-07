@@ -1,13 +1,15 @@
 ![alt text](https://github.com/Girish400/AWS/blob/master/AWS%20Logo.png "Logo Title Text 1")
-> [MD File Editor](https://stackedit.io)
+
+>[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
+
+>[Linux Academy - Orion ](http://bit.ly/2nB2gRi)
 
 > [AWS FAQ & Interview Preparation](https://docs.google.com/spreadsheets/d/1IXxlZ674sxfCdDvV8iAj2DBQV_ow1QIEpvYn8yJC4J4/edit?ts=5a9f3458#gid=800669335) 
 
 > [GitHub Link for AWS notes](https://github.com/agasthik/aws-csa-2017#aws-csa-2017-study-guide)
 
->[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
+> [MD File Editor](https://stackedit.io)
 
->[Linux Academy - Orion ](http://bit.ly/2nB2gRi)
 ---
 
 ## AWS Certification Notes
