@@ -86,7 +86,7 @@
 	 -  Configure who uses AWS and their level of access to the AWS Console.
 	 -  Centralized control over AWS Account
 	 -  Setup password rotation policy and Configure a Strong Password Policy for Your Users
-	 -  Use Roles for Applications That Run on Amazon EC2 Instances`
+	 -  Use Roles for Applications That Run on Amazon EC2 Instances
  
 
    											          [Top][#aws-certification-notes]
