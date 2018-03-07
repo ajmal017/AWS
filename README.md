@@ -6,6 +6,7 @@
 
 >[AWS-SSA Notes](http://clusterfrak.com/notes/certs/aws_saa_notes/)
 
+>[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 > [AWS FAQ & Interview Preparation](https://docs.google.com/spreadsheets/d/1IXxlZ674sxfCdDvV8iAj2DBQV_ow1QIEpvYn8yJC4J4/edit?ts=5a9f3458#gid=800669335) 
 
 > [GitHub Link for AWS notes](https://github.com/agasthik/aws-csa-2017#aws-csa-2017-study-guide)
