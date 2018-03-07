@@ -14,7 +14,7 @@
  AWS Modules|
 --- |
 [IAM - Identity and Access Management](https://github.com/Girish400/AWS/blob/master/README.md#iam---identity-and-access-management) |
-[VPC - Virtual Private Cloud][VPC-here]|
+[VPC - Virtual Private Cloud][1]|
 ---
 
 
@@ -93,8 +93,8 @@
 =================================================================================
   
 
-[VPC-here]:  
-### VPC - Virtual Private Cloud
+ 
+[1]: ### VPC - Virtual Private Cloud
 	-  VPC is a virtual network in the AWS cloud
 	-  Amazon VPC lets you provision a logically isolated section of the Amazon Web Services (AWS) cloud where you can launch AWS resources in a virtual network that you define.
 	-  Virtual data center in the cloud. You can have multiple VPC's per region. VPC's can also be connected to each other via VPC peering
