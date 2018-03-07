@@ -13,10 +13,9 @@
 | AWS Modules||
 |------------- |:-------------:|
 |[Identity Access Management (IAM)](https://github.com/Girish400/AWS/blob/master/README.md#iam---identity-and-access-management) | 
-|Additional Exam Tips |9 | 53:39|
 
 
-# AWS 10000 Feet Overview
+
 
 
 =================================================================================
