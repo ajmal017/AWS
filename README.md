@@ -214,7 +214,8 @@ Nat vs Bastion
 		- Hardware Virtual Private Network and leverage the AWS cloud as an extension of your corporate datacenter
 	
 	
-=======================================================================================================================================================================================================================================		
+=============================================================================  [Top](#aws-certification-notes)
+		
 
 SQS - Simple Queue Service
 
@@ -251,7 +252,8 @@ SQS are billed in 64KB chunks
 SQS Fanning out- Create SNS topic and subscribe multiple queue. When a message is sent to SNS topic, the message will be fanned out to the SQS queues
 
 
-=======================================================================================================================================================================================================================================
+=============================================================================  [Top](#aws-certification-notes)
+
 
 SNS – Simple Notification Service
 	Amazon Simple Notification Service (Amazon SNS) is a web service that makes it easy to set up, operate, and send notifications from the cloud. 
@@ -276,8 +278,7 @@ SNS – Simple Notification Service
 				 SNS is Push, SQS is pull based service
 	SNS - Type, MessageID, TopicARN, Subject, Message, TimeStamp, SignatureVersion, Signature, SigningCertURL, UnsubscribeURL, Message attributes
 
-=======================================================================================================================================================================================================================================
-
+=============================================================================  [Top](#aws-certification-notes)
 
 Amazon Kinesis
  -	Streaming data is data that is generated continously by thousands of data sources – stock prices, game information, social network data, geo-spatial data, purchases from online stores, IoT sensor data.
