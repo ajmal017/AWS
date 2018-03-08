@@ -73,3 +73,6 @@
 -   Restore default file contexts
 -   Use boolean settings to modify system SELinux settings
 -   Diagnose and address routine SELinux policy violations
+
+
+[Back to Repo](https://github.com/Girish400/AWS)
