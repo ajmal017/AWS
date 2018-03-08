@@ -8,4 +8,6 @@
 -   Configuring system logging, including remote logging
 -   Configuring a system to provide networking services, including HTTP/HTTPS, File Transfer Protocol (FTP), network file system (NFS), server message block (SMB), Simple Mail Transfer Protocol (SMTP), secure shell (SSH) and Network Time Protocol (NTP)
 
-                                                                                          [Back to Repo](https://github.com/Girish400/AWS)
+
+
+[Back to Repo](https://github.com/Girish400/AWS)
