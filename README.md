@@ -321,6 +321,10 @@ Amazon Kinesis
 	
 	
 CloudWatch :
+
+With Amazon CloudWatch, you can monitor your applications running on AWS. It allows you to collect and track metrics, collect and monitor log files, set alarms, and automatically react to changes in your AWS resources.
+
+
 	CloudWatch is a logging and monitoring service that is used to monitor your AWS resources, as well as the applications that run on AWS
 	You monitor your environment by configuring and viewing CloudWatch Metrics. Metrics are datapoint specific to each AWS service or Resource
 	CloudWatch alarms – set notifications when particular metric thresholds is hit.
