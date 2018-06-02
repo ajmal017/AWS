@@ -1,0 +1,24 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "ExplicitAllowAllEC2ActionToAllRescourse",
+            "Effect": "Allow",
+            "Action": "ec2:*",
+            "Resource": "*"
+        },
+        {
+            "Sid": "ExplicitDenyAllEC2ActionToAllRescourseExceptIfT2micro",
+            "Effect": "Deny",
+            "Action": "ec2:RunInstances",
+	    "Resource": "arn:aws:ec2:*:AWSACCOUNTNUMBER:instance/*"
+            "Condition": {
+                "StringNotLikeIfExists": {
+                    "ec2:InstanceType": "t2.micro"
+                }
+            }
+        }
+    ]
+}
+
+
