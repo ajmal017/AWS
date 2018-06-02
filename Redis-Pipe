@@ -1,7 +1,0 @@
-%%time
-keys = r14.keys()
-pipe = r14.pipeline()
-for key in keys:
-    pipe.lrange(key,0,-1)    
-values = pipe.execute()
-len(keys)
