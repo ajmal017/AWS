@@ -1,5 +1,5 @@
 
-## Redis [![Build Status][travis-image]][travis-link] [![Inline docs][inchpages-image]][inchpages-link]
+## Redis [![Build Status](https://secure.travis-ci.org/joshwnj/inline-docs.png)](http://travis-ci.org/joshwnj/inline-docs)
 ***
 
 **Redis** is an open source (BSD licensed), in-memory data structure store, used as a database, cache and message broker. 
