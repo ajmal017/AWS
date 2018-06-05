@@ -21,7 +21,7 @@ values = pipe.execute()
 
 dict_quote = {}
 k=0
-
+ 
 for ticks in QuoteTicks:
     tick = eval(ticks)
     dict_quote[k] = tick
