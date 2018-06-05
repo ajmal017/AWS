@@ -7,3 +7,8 @@ It supports data structures such as strings, hashes, lists, sets, sorted sets wi
 
 ***
 ##
+
+
+<p align="center">
+  <img width="460" height="300" src="redis.png">
+</p>
