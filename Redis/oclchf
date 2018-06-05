@@ -1,7 +1,25 @@
 #Process Quote Mode - 8972546
 
+%%time
 r5 = s.redis_conn(5)
-QuoteTicks = r5.lrange("8972546",0,-1)  # 8972546 is the instrument token
+
+
+'''
+## Method 1
+'''
+QuoteTicks = r5.lrange("8972546",0,-1)
+
+
+
+'''
+## Method 2
+pipe = r5.pipeline()
+keys = '8972546'
+for i in range(r5.llen('8972546')):
+    pipe.lrange(keys,i,i+1)    
+values = pipe.execute()
+'''
+
 
 %%time
 dict_quote = {}
