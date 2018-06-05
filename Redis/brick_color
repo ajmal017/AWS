@@ -1,0 +1,81 @@
+import math as m
+import selenium3 as s
+import webbrowser
+import pandas as pd
+import numpy as np
+import urllib
+import time
+import datetime
+import dateutil.tz
+from dateutil.tz import tzoffset
+import redis
+import webbrowser
+
+
+r = redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True,db=14)
+stock = 'BANKNIFTY07JUN1826400CE'
+
+def Get_Data_from_Redis():    
+    stock_data = r.lrange(stock,0,-1)
+    stock_data_to_string = eval(stock_data[0])
+    return stock_data_to_string
+    
+
+def Convert_Redis_data_to_DataFrame():
+    stock_string = Get_Data_from_Redis()
+    my_dict={}
+    k=0
+    for i in stock_string:
+        my_dict[k]=i
+        k+=1
+    df=pd.DataFrame.from_dict(my_dict,'index')     
+    df['date'] = pd.to_datetime(df['date'])    
+    df['brick'] = None       
+    return df
+
+
+        
+def Find_First_Brick_Color(df):
+    close = df.at[0, 'close']
+    floor = m.floor(close)
+    ceil =  m.ceil(close)
+
+    i=0;j=0
+    while i != len(df):
+        close = df.at[i, 'close']
+        if close <= ceil-1:                
+            floor = m.floor(close)
+            ceil =  m.ceil(close)            
+            j=i                                             
+        elif close >= floor+2:            
+            df.at[j, 'brick'] = 'Green'
+            break
+        i+=1
+
+    close = df.at[0, 'close']
+    floor = m.floor(close)
+    ceil =  m.ceil(close)
+
+    i=0;j=0
+    while i != len(df):
+        close = df.at[i, 'close']
+        if close >= floor+1:                
+            floor = m.floor(close)
+            ceil =  m.ceil(close)            
+            j=i                                             
+        elif close <= ceil-2:            
+            df.at[j, 'brick'] = 'Red'
+            break
+        i+=1
+
+
+    df.to_html('jd.html')
+    webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open("jd.html") 
+    
+
+if __name__ == '__main__':
+    df = Convert_Redis_data_to_DataFrame()
+#    brick = Find_First_Brick_Color(df)
+    print(Find_First_Brick_Color(df))
+    
+    
