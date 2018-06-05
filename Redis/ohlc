@@ -1,0 +1,26 @@
+#Process Quote Mode - 8972546
+
+r5 = s.redis_conn(5)
+QuoteTicks = r5.lrange("8972546",0,-1)
+
+%%time
+dict_quote = {}
+k=0
+
+for ticks in QuoteTicks:
+    tick = eval(ticks)
+    dict_quote[k] = tick
+    k+=1           
+df_quote = pd.DataFrame.from_dict(dict_quote,'index')
+
+%%time
+df_quote = df_quote[['instrument_token','last_price','date','volume']]
+df_quote.sort_values('date',ascending=True,inplace=True)
+df_quote.set_index('date',inplace=True)
+df_quote = df_quote[df_quote.index != '2018-06-05 09:03:56.232101']
+df_quote['Volume'] = (df_quote.volume - df_quote.volume.shift(1))
+df_quote.fillna(df_quote.volume[0],inplace=True)
+df_quote = df_quote.resample('1Min').agg({'last_price': 'ohlc', 'Volume': 'sum'})
+df_quote['cummulative_vol'] = df_quote.Volume.cumsum()
+
+df_quote
