@@ -1,0 +1,11 @@
+conn = s.redis_conn(9)
+
+user = {"Name":"Pradeep", "Company":"SCTL", "Address":"Mumbai", "Location":"RCP"}
+conn.hmset("pythonDict", user)
+user = {"Name":"Pradeep", "Company":"SCTL", "Address":"Mumbai", "Location":"RCP"}
+conn.hmset("pythonDict1", user)
+
+testdict = conn.hgetall("pythonDict")
+
+df_test = pd.DataFrame.from_dict(testdict,'index')
+df_test
