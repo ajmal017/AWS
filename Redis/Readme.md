@@ -1,7 +1,4 @@
-
 ## Redis [![Build Status](https://secure.travis-ci.org/joshwnj/inline-docs.png)](http://travis-ci.org/joshwnj/inline-docs)
-***
-
 <p align="center">
   <img width="460" height="300" src="redis.png">
 </p>
@@ -11,3 +8,6 @@ It supports data structures such as strings, hashes, lists, sets, sorted sets wi
 
 ***
 ##
+
+
+
