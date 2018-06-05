@@ -1,4 +1,4 @@
-## Testing Redis
+## Redis
 ***
 
 
