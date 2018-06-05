@@ -1,0 +1,30 @@
+%%time
+r5 = s.redis_conn(5)
+
+'''
+## Method 1
+'''
+
+QuoteTicks = r5.lrange("8972546",0,-1)
+
+
+
+'''
+## Method 2
+pipe = r5.pipeline()
+keys = '8972546'
+for i in range(r5.llen('8972546')):
+    pipe.lrange(keys,i,i+1)    
+values = pipe.execute()
+'''
+
+
+dict_quote = {}
+k=0
+
+for ticks in QuoteTicks:
+    tick = eval(ticks)
+    dict_quote[k] = tick
+    k+=1           
+df_quote = pd.DataFrame.from_dict(dict_quote,'index')
+df_quote = df_quote.astype(dtype= {"instrument_token":"int32","last_price":"float32","last_quantity":"int32","average_price":"float32","volume":"int32","buy_quantity":"int32","sell_quantity":"int32","change":"float32"})
