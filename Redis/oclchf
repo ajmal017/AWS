@@ -17,7 +17,7 @@ pipe = r5.pipeline()
 keys = '8972546'
 for i in range(r5.llen('8972546')):
     pipe.lrange(keys,i,i+1)    
-values = pipe.execute()
+QuoteTicks = pipe.execute()
 '''
 
 
