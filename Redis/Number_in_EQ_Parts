@@ -1,4 +1,4 @@
-mynumber=102
-nparts = 10
+mynumber=121
+nparts = 11
 x=np.full(nparts, 1)
-l= np.append((x * int(mynumber/nparts)), mynumber%10)
+l= np.append((x * int(mynumber/nparts)), mynumber%nparts)
