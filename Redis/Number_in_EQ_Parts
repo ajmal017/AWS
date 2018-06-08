@@ -1,0 +1,3 @@
+mynumber=10
+x=np.full(10, 1)
+l= np.append((x * int(mynumber/10)), mynumber%10)
