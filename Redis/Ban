@@ -1,0 +1,11 @@
+## Securities in BAN Period
+def ban_securities():
+    try:
+        url = "https://www.nseindia.com/archives/fo/sec_ban/fo_secban_" + datetime.datetime.today().strftime('%d%m%Y') + ".csv"
+        s=requests.get(url).content
+        df=pd.read_csv(io.StringIO(s.decode('utf-8')))
+    except:
+        print("404 - Page not Found")
+    return df
+
+ban_securities()
