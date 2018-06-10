@@ -1,0 +1,248 @@
+import selenium3 as s
+import logging
+from kiteconnect import KiteTicker
+from kiteconnect import KiteConnect
+import pandas as pd
+import redis
+from datetime import datetime
+import time
+from dateutil import tz
+import struct
+
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+EXCHANGE_MAP = {
+    "nse": 1,
+    "nfo": 2,
+    "cds": 3,
+    "bse": 4,
+    "bfo": 5,
+    "bsecds": 6,
+    "mcx": 7,
+    "mcxsx": 8,
+    "indices": 9
+}
+
+# Available streaming modes.
+MODE_FULL = "full"
+MODE_QUOTE = "quote"
+MODE_LTP = "ltp"
+
+## Get the Insrument Tokens
+
+tokens=[9897730, 10695426, 10487810, 12739074, 10085890, 9897218, 12701186, 9470210, 10132226, 10082818, 9535490, 10495490, 9011458, 10285314, 10086146, 10496002, 10477314, 10477826, 9894658, 10504706, 10476034, 10478338, 12726274, 10486530, 10010626, 10504194, 10010114, 10122754, 8977922, 10491906, 12736514, 9310722, 10694914, 10500866, 10016002, 10502402, 9530114, 10495234, 10496514, 8982530, 10496258, 10012418, 10502658, 9470978, 10495746, 9011202, 10504450, 10488834, 10500610, 8995074]
+
+r = redis.Redis(host='127.0.0.1',port=6379,db=1)
+r.flushdb()
+r9 = redis.Redis(host='127.0.0.1',port=6379,db=9)
+r9.flushdb()
+
+
+## Get the Access Token
+kite = KiteConnect(api_key = s.api_key())
+
+## Set the API and Access Token
+api_key = s.api_key()
+access_token = s.GetAccessToken()
+
+# Initialise.
+kws = KiteTicker(api_key, access_token, debug=False)
+def on_ticks(ws, ticks):    
+    r.lpush("Ticks-Full",ticks)
+        
+    
+def on_connect(ws, response):
+    logging.debug("on connect: {}".format(response))
+    ws.subscribe(tokens)
+    ws.set_mode(ws.MODE_FULL, tokens)
+
+
+def on_close(ws, code, reason):
+    logging.error("closed connection on close: {} {}".format(code, reason))
+    
+
+def on_error(ws, code, reason):
+    logging.error("closed connection on error: {} {}".format(code, reason))
+
+
+def on_noreconnect(ws):
+    logging.error("Reconnecting the websocket failed")
+
+
+def on_reconnect(ws, attempt_count):
+    logging.debug("Reconnecting the websocket: {}".format(attempt_count))
+
+
+def on_order_update(ws, data):    
+    r9.lpush('Orders',data)
+
+
+def _unpack_int(bin, start, end, byte_format="I"):
+    """Unpack binary data as unsgined interger."""
+    return struct.unpack(">" + byte_format, bin[start:end])[0]
+    
+    
+def _split_packets(bin):
+    """Split the data to individual packets of ticks."""
+    # Ignore heartbeat data.
+    if len(bin) < 2:
+        return []
+
+    number_of_packets = _unpack_int(bin, 0, 2, byte_format="H")
+    packets = []
+
+    j = 2
+    for i in range(number_of_packets):
+        packet_length = _unpack_int(bin, j, j + 2, byte_format="H")
+        packets.append(bin[j + 2: j + 2 + packet_length])
+        j = j + 2 + packet_length
+
+    return packets    
+    
+    
+def _parse_binary(bin):
+    """Parse binary data to a (list of) ticks structure."""
+    packets = _split_packets(bin)  # split data to individual ticks packet
+    data = []
+
+    for packet in packets:
+        instrument_token = _unpack_int(packet, 0, 4)
+        segment = instrument_token & 0xff  # Retrive segment constant from instrument_token
+
+        divisor = 10000000.0 if segment == EXCHANGE_MAP["cds"] else 100.0
+
+        # All indices are not tradable
+        tradable = False if segment == EXCHANGE_MAP["indices"] else True
+
+        # LTP packets
+        if len(packet) == 8:
+            data.append({
+                "tradable": tradable,
+                "mode": MODE_LTP,
+                "instrument_token": instrument_token,
+                "last_price": _unpack_int(packet, 4, 8) / divisor
+            })
+        # Indices quote and full mode
+        elif len(packet) == 28 or len(packet) == 32:
+            mode = MODE_QUOTE if len(packet) == 28 else MODE_FULL
+
+            d = {
+                "tradable": tradable,
+                "mode": mode,
+                "instrument_token": instrument_token,
+                "last_price": _unpack_int(packet, 4, 8) / divisor,
+                "ohlc": {
+                    "high": _unpack_int(packet, 8, 12) / divisor,
+                    "low": _unpack_int(packet, 12, 16) / divisor,
+                    "open": _unpack_int(packet, 16, 20) / divisor,
+                    "close": _unpack_int(packet, 20, 24) / divisor
+                }
+            }
+
+            # Compute the change price using close price and last price
+            d["change"] = 0
+            if(d["ohlc"]["close"] != 0):
+                d["change"] = (d["last_price"] - d["ohlc"]["close"]) * 100 / d["ohlc"]["close"]
+
+            # Full mode with timestamp
+            if len(packet) == 32:
+                try:
+                    timestamp = datetime.fromtimestamp(_unpack_int(packet, 28, 32))
+                except TypeError:
+                    timestamp = None
+
+                d["timestamp"] = timestamp
+
+            data.append(d)
+        # Quote and full mode
+        elif len(packet) == 44 or len(packet) == 184:
+            mode = MODE_QUOTE if len(packet) == 44 else MODE_FULL
+
+            d = {
+                "tradable": tradable,
+                "mode": mode,
+                "instrument_token": instrument_token,
+                "last_price": _unpack_int(packet, 4, 8) / divisor,
+                "last_quantity": _unpack_int(packet, 8, 12),
+                "average_price": _unpack_int(packet, 12, 16) / divisor,
+                "volume": _unpack_int(packet, 16, 20),
+                "buy_quantity": _unpack_int(packet, 20, 24),
+                "sell_quantity": _unpack_int(packet, 24, 28),
+                "ohlc": {
+                    "open": _unpack_int(packet, 28, 32) / divisor,
+                    "high": _unpack_int(packet, 32, 36) / divisor,
+                    "low": _unpack_int(packet, 36, 40) / divisor,
+                    "close": _unpack_int(packet, 40, 44) / divisor
+                }
+            }
+
+            # Compute the change price using close price and last price
+            d["change"] = 0
+            if(d["ohlc"]["close"] != 0):
+                d["change"] = (d["last_price"] - d["ohlc"]["close"]) * 100 / d["ohlc"]["close"]
+
+            # Parse full mode
+            if len(packet) == 184:
+                try:
+                    #last_trade_time = datetime.fromtimestamp(_unpack_int(packet, 44, 48))
+                    if _unpack_int(packet, 44, 48) != 0:
+                        last_trade_time = datetime.fromtimestamp(_unpack_int(packet, 44, 48))
+                    else:
+                        #last_trade_time = datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')                    
+                        last_trade_time =  datetime.fromtimestamp(time.time())
+                except TypeError:
+                    last_trade_time = None
+
+                try:
+                    #timestamp = datetime.fromtimestamp(_unpack_int(packet, 60, 64))
+                    if _unpack_int(packet, 60, 64) != 0:
+                        timestamp = datetime.fromtimestamp(_unpack_int(packet, 60, 64))
+                    else:
+                        #timestamp = datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+                        timestamp =  datetime.fromtimestamp(time.time())
+                except TypeError:
+                    timestamp = None
+
+                d["last_trade_time"] = last_trade_time
+                d["oi"] = _unpack_int(packet, 48, 52)
+                d["oi_day_high"] = _unpack_int(packet, 52, 56)
+                d["oi_day_low"] = _unpack_int(packet, 56, 60)
+                d["timestamp"] = timestamp
+
+                # Market depth entries.
+                depth = {
+                    "buy": [],
+                    "sell": []
+                }
+
+                # Compile the market depth lists.
+                for i, p in enumerate(range(64, len(packet), 12)):
+                    depth["sell" if i >= 5 else "buy"].append({
+                        "quantity": _unpack_int(packet, p, p + 4),
+                        "price": _unpack_int(packet, p + 4, p + 8) / divisor,
+                        "orders": _unpack_int(packet, p + 8, p + 10, byte_format="H")
+                    })
+
+                d["depth"] = depth
+
+            data.append(d)
+
+    return data
+
+
+def _on_message(ws, payload, is_binary):    
+    if _parse_binary(payload):
+        r.lpush("Ticks-FULL",_parse_binary(payload))
+    
+    
+    
+
+kws.on_ticks = on_ticks
+kws.on_connect = on_connect
+kws.on_close = on_close
+kws.on_error = on_error
+kws.on_noreconnect = on_noreconnect
+kws.on_reconnect = on_reconnect
+kws.on_order_update = on_order_update
+kws._on_message = _on_message
+kws.connect(threaded=True)
