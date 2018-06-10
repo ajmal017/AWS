@@ -1,0 +1,65 @@
+import pandas as pd
+import numpy as np
+import selenium3 as s
+from pandas import Timestamp
+import redis
+import time
+import datetime
+r = s.redis_conn(1)
+r4 = s.redis_conn(4)
+
+r4.flushdb()
+while True:
+    data = r.lpop('Ticks-FULL')
+    if data != None:
+        data_list = eval(data)
+        for ticks in data_list:
+            r4.lpush(ticks.get('instrument_token'),ticks)
+            r4.lpush(str(ticks.get('instrument_token')) + "_backup",ticks)
+            
+            
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import pandas as pd
+import numpy as np
+import selenium3 as s
+from pandas import Timestamp
+import redis
+import time
+import datetime
+r = s.redis_conn(2)
+r5 = s.redis_conn(5)    
+
+r5.flushdb()
+while True:
+    data = r.lpop('Ticks-Quote')
+    if data != None:
+        data_list = eval(data)        
+        for ticks in data_list[1]:
+            ticks['date'] = data_list[0]
+            r5.lpush(ticks.get('instrument_token'),ticks)
+            r5.lpush(str(ticks.get('instrument_token')) + "_backup",ticks)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import pandas as pd
+import numpy as np
+import selenium3 as s
+from pandas import Timestamp
+import redis
+import time
+import datetime
+r = s.redis_conn(3)
+r6 = s.redis_conn(6)    
+r6.flushdb()
+
+
+while True:
+    data = r.lpop('Ticks-LTP')
+    if data != None:
+        data_list = eval(data)
+        for ticks in data_list:
+            r6.lpush(ticks.get('instrument_token'),ticks)
+            r6.lpush(str(ticks.get('instrument_token')) + "_backup",ticks)
+
+
