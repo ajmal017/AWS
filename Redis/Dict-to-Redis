@@ -1,8 +1,8 @@
 conn = s.redis_conn(9)
 
-user = {"Name":"Pradeep", "Company":"SCTL", "Address":"Mumbai", "Location":"RCP"}
+user = {"Name":"Girish", "Company":"SCTL", "Address":"Pune", "Location":"RCP"}
 conn.hmset("pythonDict", user)
-user = {"Name":"Pradeep", "Company":"SCTL", "Address":"Mumbai", "Location":"RCP"}
+user = {"Name":"Girish", "Company":"SCTL", "Address":"Pune", "Location":"RCP"}
 conn.hmset("pythonDict1", user)
 
 testdict = conn.hgetall("pythonDict")
