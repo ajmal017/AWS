@@ -1,0 +1,41 @@
+# imported the requests library
+import requests
+from zipfile import ZipFile
+import datetime
+import time
+import pandas as pd
+
+image_url = "https://www.nseindia.com/content/historical/DERIVATIVES/2018/JUN/fo07JUN2018bhav.csv.zip"
+ 
+# URL of the image to be downloaded is defined as image_url
+r = requests.get(image_url) # create HTTP response object
+ 
+# send a HTTP request to the server and save
+# the HTTP response in a response object called r
+with open("E:/Trading Programs/00 Main Programs/tmp/fo.zip",'wb') as f:
+ 
+    # Saving received content as a png file in
+    # binary format
+ 
+    # write the contents of the response (r.content)
+    # to a new file in binary mode.
+    f.write(r.content)
+time.sleep(5)
+file_name = "E:/Trading Programs/00 Main Programs/tmp/fo.zip"
+zip_file = ZipFile(file_name)
+zip_file.extractall(path="E:/Trading Programs/00 Main Programs/tmp/")
+zip_file.close()
+
+df = pd.read_csv("E:/Trading Programs/00 Main Programs/tmp/fo07JUN2018bhav.csv")
+df['DIFF'] = df.CLOSE-df.OPEN
+df['CHANGE'] = ((df['CLOSE']-df['OPEN'])*100)/df['CLOSE']
+df= df[df.INSTRUMENT == 'FUTSTK']
+
+df1 = pd.DataFrame(df.groupby(["INSTRUMENT","SYMBOL","EXPIRY_DT","OPTION_TYP",'DIFF','CLOSE','CHANGE'])[["OPEN_INT","CHG_IN_OI"]].max())
+
+df1 = df1.sort_values(['CHANGE'])
+
+df1 = df1[(df1.OPEN_INT > 1000000) & (df1.CHG_IN_OI > 1000000)]
+
+df1.to_html('jd.html')
+webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open("jd.html")
