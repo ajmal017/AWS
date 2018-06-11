@@ -20,3 +20,32 @@ for i,j in tokenlist.iterrows():
 
     
 print(len( r14.keys())," Tables created in Redis DB-14")
+
+######################################################################################################################################################
+## Push Historical data in Redis
+
+def push_historical_data():
+
+    tokenlist  = pd.read_pickle("NSE_BANKNIFTY_OPT.pkl")
+    #tokenlist1  = pd.read_pickle("NSE_FUT.pkl")
+    #tokenlist2  = pd.read_pickle("MCXTokens.pkl")    
+    tokenlist = tokenlist[['instrument_token','tradingsymbol']]
+    tokenlist = tokenlist.reset_index(drop=True)
+    r14.flushdb()
+
+    for i in tnrange(len(tokenlist), desc ="Creating Tables in Redis "):
+        instrument_token = tokenlist.at[i,'instrument_token']
+        tradingsymbol = tokenlist.at[i,'tradingsymbol']
+        while True:
+            try:            
+                historicdata = kite.historical_data(instrument_token, s.ToDate(), s.ToDate(), "minute", continuous=False) 
+                if len(historicdata) != 0:
+                    r14.lpush(tradingsymbol,historicdata)   
+
+                break
+
+            except Exception as e:            
+                print("------>",e,"   ---->",tradingsymbol)
+
+
+push_historical_data()   
