@@ -1,0 +1,38 @@
+# imported the requests library
+import requests
+from zipfile import ZipFile
+
+dt4 = datetime.now() - timedelta(days=1)
+var1 = "fo" + dt4.strftime("%d") + dt4.strftime("%b").upper() +dt4.strftime("%Y") + "bhav.csv.zip"
+image_url = "https://www.nseindia.com/content/historical/DERIVATIVES/" + dt4.strftime("%Y") + "/" + dt4.strftime("%b").upper()+ "/" + var1
+ 
+# URL of the image to be downloaded is defined as image_url
+r = requests.get(image_url) # create HTTP response object
+ 
+# send a HTTP request to the server and save
+# the HTTP response in a response object called r
+with open("E:/Trading Programs/00 Main Programs/tmp/fo.zip",'wb') as f:
+ 
+    # Saving received content as a png file in
+    # binary format
+ 
+    # write the contents of the response (r.content)
+    # to a new file in binary mode.
+    f.write(r.content)
+time.sleep(10)
+file_name = "E:/Trading Programs/00 Main Programs/tmp/fo.zip"
+zip_file = ZipFile(file_name)
+zip_file.extractall(path="E:/Trading Programs/00 Main Programs/tmp/")
+zip_file.close()
+
+time.sleep(10)
+filename1 = "E:/Trading Programs/00 Main Programs/tmp/" + "fo" + dt4.strftime("%d") + dt4.strftime("%b").upper() +dt4.strftime("%Y") + "bhav.csv"
+df = pd.read_csv(filename1)
+#df.to_html('NSE_FUT.html')
+#webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open("NSE_FUT.html") 
+df = df[df.INSTRUMENT=='FUTSTK']
+df = df[(df.CHG_IN_OI > 1000000) & (df.OPEN_INT > 1000000)]
+
+df1 = pd.DataFrame(df.groupby(["INSTRUMENT","SYMBOL","EXPIRY_DT","OPTION_TYP"])[["OPEN_INT","CHG_IN_OI"]].max())
+df1 = df1.sort_values(['CHG_IN_OI', 'OPEN_INT'])
+df1
