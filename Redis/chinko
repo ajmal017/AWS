@@ -1,1 +1,193 @@
-test
+import selenium4 as s
+import webbrowser as w
+import math as m
+import pandas as pd
+
+def Get_Stock_Data(stock):    
+    data = s.Convert_Redis_data_to_DataFrame(stock )
+    return data
+
+    
+def Renko(data):
+    i = data[0]
+    df = data[1]
+    brick= df.at[i,'brick']
+    close = df.at[i,'close']
+    floor = m.floor(close)
+    ceil = m.ceil(close)
+    
+    
+    if brick == "Green":
+        floor = m.floor(close)
+        print(floor)
+    elif brick == "Red":
+        ceil = m.ceil(close)
+        print(ceil)
+    j=i
+    while i !=len(df):    
+        dateu= df.at[i-1,'date']
+        close= df.at[i,'close']
+            
+        if brick == 'Green':
+    
+            if close >= floor+1:                                            
+#                diff = m.floor(close) - floor
+                brick = 'Green'
+                floor = m.floor(close)
+                ceil = m.ceil(close)
+#                print(df.loc[i, ['date','close']])
+                print(df.loc[j, 'date'],"  Green")
+                j=i
+#                print('Floor:',floor)
+#                print('Ceil:',ceil)
+#                if i==3:
+#                    break
+                
+    
+            elif close <= floor-2:     
+                brick = 'Red'            
+                floor = m.floor(close)
+                ceil = m.ceil(close)
+                print(df.loc[j, 'date'],"  Red")
+                j=i
+        
+        elif brick == 'Red':
+        
+            if close <= ceil-1:
+                brick = 'Red'
+                floor = m.floor(close)
+                ceil = m.ceil(close)    
+                print(df.loc[j, 'date'],"  Red")
+                j=i
+                
+            elif close >= ceil+2:
+                brick = 'Green'            
+                floor = m.floor(close)
+                ceil = m.ceil(close)
+                print(df.loc[j, 'date'],"  Green")
+                j=i
+        
+        i+=1
+
+        
+    return df
+    
+    
+    
+
+if __name__ == '__main__':
+    data = Get_Stock_Data('BANKNIFTY14JUN1826800CE')
+    df = Renko(data)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+#s.Find_First_Brick_Color(df)
+#startindex = s.Find_Starting_Index(df)
+#
+#print(df[['date','close','brick']].head())
+#print(startindex)
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+'''
+
+df.to_html('Renko15.html')
+webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open("Renko15.html")
+
+i=0
+j=i
+brick='Green'
+close = df.at[i,'close']
+
+if brick == 'Red':
+    Rclose = m.ceil(close)
+elif brick == 'Green':
+    Rclose = m.floor(close)
+
+
+while i !=len(df):    
+    dateu= df.at[i,'date']
+    close= df.at[i,'close']
+        
+    if brick == 'Green':
+
+        if close >= Rclose+1:                                            
+            brick = 'Green'
+            diff = math.floor(close) - Rclose
+            Rclose = math.floor(close)
+            print(diff)
+
+        elif close <= Rclose-2:     
+            brick = 'Red'            
+            diff = Rclose - math.ceil(close)
+            Rclose = math.ceil(close)
+            print(diff)
+
+    
+    elif brick == 'Red':
+    
+        if close <= Rclose-1:
+            brick = 'Red'
+            diff = Rclose - math.ceil(close)
+            Rclose = math.ceil(close)
+            print(diff)
+                            
+            
+        elif close >= Rclose+2:
+            brick = 'Green'            
+            diff = math.floor(close) - Rclose
+            Rclose = math.floor(close)
+            print(diff)
+            
+    
+    i+=1
+    
+    
+    
+#    
+#    
+'''    
