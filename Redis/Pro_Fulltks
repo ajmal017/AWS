@@ -1,0 +1,17 @@
+## Process full ticks
+
+def procee_full_ticks():
+    df_dict={}
+    k=0
+    r1 = s.redis_conn(4)
+    FullTicks = r1.lrange("10504450",0,-1)    
+    '''
+    for eachtick in FullTicks:
+        ticks_= eval(eachtick)
+        df_dict[k] = ticks_
+        k+=1  
+    df = pd.DataFrame.from_dict(df_dict,'index')       
+    '''
+    return df[['instrument_token','last_price','last_quantity','volume','change','last_trade_time','timestamp']]
+
+procee_full_ticks()
