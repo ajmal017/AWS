@@ -45,10 +45,12 @@ print(response)
 import redis
 NUM_OF_USERS = 20000
 KEY_USERS = 'test:users'
+KEY_USERS1 = 'test1:users1'
 KEY_USER = 'test:user:%s'
 
 
 r = redis.StrictRedis(host='localhost', port=6379, db=0)
+r.flushall()
 
 ## With Pipe
 %%time
@@ -61,7 +63,7 @@ pipe.execute()
 
 %%time
 for i in range(NUM_OF_USERS):
-    r.lpush(KEY_USERS, i)
+    r.lpush(KEY_USERS1, i)
     
     
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
