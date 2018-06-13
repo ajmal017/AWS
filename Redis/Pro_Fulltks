@@ -3,8 +3,12 @@
 def procee_full_ticks():
     df_dict={}
     k=0
-    r1 = s.redis_conn(4)
-    FullTicks = r1.lrange("10504450",0,-1)        
+    r4 = s.redis_conn(4)
+    
+    freq = '1Min'
+    instrument_token='10504450'
+    
+    FullTicks = r4.lrange(instrument_token,0,-1)        
     for eachtick in FullTicks:
         ticks_= eval(eachtick)
         df_dict[k] = ticks_
@@ -13,9 +17,11 @@ def procee_full_ticks():
     df.set_index('timestamp',inplace=True,drop=True)
     df.dropna(inplace=True)
     df['vol'] = df['volume']-df['volume'].shift()
-    ohlc = df['last_price'].resample('1Min').ohlc()
-    price = df['vol'].resample('1Min').sum()
+    ohlc = df['last_price'].resample(freq).ohlc()
+    price = df['vol'].resample(freq).sum()
     df_ohlc = pd.concat([ohlc,price], axis=1)
     return df[['instrument_token','last_price','last_quantity','volume','vol','change','last_trade_time']],df_ohlc
 
 df = procee_full_ticks()
+print(df[0].head())
+print(df[1].head())
