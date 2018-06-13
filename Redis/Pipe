@@ -5,7 +5,7 @@ for key in keys:
     pipe.lrange(key,0,-1)    
 values = pipe.execute()
 len(keys)
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
@@ -17,7 +17,7 @@ for i in range(r5.llen('8972546')):
 values = pipe.execute()
 
 
-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 %%time
 from __future__ import print_function
@@ -38,3 +38,30 @@ pipeline.scard("myset")
 #Send commands
 response = pipeline.execute()
 print(response)
+
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+%%time
+import redis
+NUM_OF_USERS = 20000
+KEY_USERS = 'test:users'
+KEY_USER = 'test:user:%s'
+
+
+r = redis.StrictRedis(host='localhost', port=6379, db=0)
+
+## With Pipe
+%%time
+pipe = r.pipeline()
+for i in range(NUM_OF_USERS):
+    pipe.lpush(KEY_USERS, i)
+pipe.execute()
+
+##Without Pipe
+
+%%time
+for i in range(NUM_OF_USERS):
+    r.lpush(KEY_USERS, i)
+    
+    
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
