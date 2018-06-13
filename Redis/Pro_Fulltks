@@ -12,7 +12,10 @@ def procee_full_ticks():
     df = pd.DataFrame.from_dict(df_dict,'index')  
     df.set_index('timestamp',inplace=True,drop=True)
     df.dropna(inplace=True)
-    return df[['instrument_token','last_price','last_quantity','volume','change','last_trade_time','timestamp']]
+    df['vol'] = df['volume']-df['volume'].shift()
+    ohlc = df['last_price'].resample('1Min').ohlc()
+    price = df['vol'].resample('1Min').sum()
+    df_ohlc = pd.concat([ohlc,price], axis=1)
+    return df[['instrument_token','last_price','last_quantity','volume','vol','change','last_trade_time']],df_ohlc
 
 df = procee_full_ticks()
-
