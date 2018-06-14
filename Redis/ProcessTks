@@ -16,8 +16,16 @@ while True:
         for ticks in data_list:
             r4.lpush(ticks.get('instrument_token'),ticks)
             r4.lpush(str(ticks.get('instrument_token')) + "_backup",ticks)
-            
-            
+           
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+redis_data = str(ticks.get('instrument_token')) + str(';') + str(ticks.get('timestamp')) + str(';') + str(ticks.get('last_price')) + str(';') + str(ticks.get('volume'))
+
+data = r4.lrange('10285314',0,-1)
+data = [i.strip('[]').split(';') for i in data]
+df = pd.DataFrame(data, columns=['instrument_token','timestamp','LTP','volume'])
+
+
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import pandas as pd
