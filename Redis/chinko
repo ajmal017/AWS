@@ -76,118 +76,99 @@ def Renko(data):
     
 
 if __name__ == '__main__':
-    data = Get_Stock_Data('BANKNIFTY14JUN1826800CE')
+    data = Get_Stock_Data(stockname)
     df = Renko(data)
     
+
+
+
+
+
+
+
+
+## selenium4
+
+import numpy as np
+import pandas as pd
+from selenium import webdriver
+import datetime
+#from datetime import timedelta
+from dateutil import tz
+import redis 
+from dateutil.tz import tzoffset
+import math as m
+
+def redis_conn(dbn):
+    r = redis.StrictRedis(host="localhost", port=6379, charset="utf-8", decode_responses=True,db=dbn)
+    return r
+
+def Get_Data_from_Redis(stock):    
+    r14=redis_conn(14)
+    stock_data = r14.lrange(stock,0,-1)
+    stock_data_to_string = eval(stock_data[0])
+    return stock_data_to_string
+   
+
+def Convert_Redis_data_to_DataFrame(stock):    
+    print("One Minute Historic Date for ",stock)    
+    stock_string = Get_Data_from_Redis(stock)
+    my_dict={}
+    k=0
+    for i in stock_string:
+        my_dict[k]=i
+        k+=1
+    df=pd.DataFrame.from_dict(my_dict,'index')   
+    #df.set_index('date',inplace=True, drop=True)
+    df["change"] = np.log(df["close"] / df["close"].shift())
+    df['volatility-21'] = df.change.rolling(21).std().shift()
+    df['Cumsum'] = df.volume.cumsum()
+    df['Ropen']= 0;df['Rclose']= 0;df['brick'] = None ;df['floor'] = np.floor(df['close']);df['ceil'] =  np.ceil(df['close']);df['diff'] = df['close'] - df['open'];
+#    return df
+
+#def Find_First_Brick_Color(df):    
+    close = df.at[0, 'close']
+    floor = m.floor(close)
+    ceil =  m.ceil(close)
+
+    i=0;j=0
+    while i != len(df):
+        close = df.at[i, 'close']
+        if close <= ceil-1:                
+            floor = m.floor(close)
+            ceil =  m.ceil(close)            
+            j=i                                             
+        elif close >= floor+2:            
+            df.at[j, 'brick'] = 'Green'
+            break
+        i+=1
+
+    close = df.at[0, 'close']
+    floor = m.floor(close)
+    ceil =  m.ceil(close)
+
+    i=0;j=0
+    while i != len(df):
+        close = df.at[i, 'close']
+        if close >= floor+1:                
+            floor = m.floor(close)
+            ceil =  m.ceil(close)            
+            j=i                                             
+        elif close <= ceil-2:            
+            df.at[j, 'brick'] = 'Red'
+            break
+        i+=1
     
     
+#    return df
     
+#def Find_Starting_Index(df):    
+    Greenindex = df[df.brick ==  'Green'].index[0]
+    Redindex = df[df.brick ==  'Red'].index[0]
     
-    
-    
-    
-    
-    
-#s.Find_First_Brick_Color(df)
-#startindex = s.Find_Starting_Index(df)
-#
-#print(df[['date','close','brick']].head())
-#print(startindex)
+    if Redindex < Greenindex:
+        startindex = Redindex
+    else:
+        startindex = Greenindex
+    return startindex,df
 
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-
-df.to_html('Renko15.html')
-webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open("Renko15.html")
-
-i=0
-j=i
-brick='Green'
-close = df.at[i,'close']
-
-if brick == 'Red':
-    Rclose = m.ceil(close)
-elif brick == 'Green':
-    Rclose = m.floor(close)
-
-
-while i !=len(df):    
-    dateu= df.at[i,'date']
-    close= df.at[i,'close']
-        
-    if brick == 'Green':
-
-        if close >= Rclose+1:                                            
-            brick = 'Green'
-            diff = math.floor(close) - Rclose
-            Rclose = math.floor(close)
-            print(diff)
-
-        elif close <= Rclose-2:     
-            brick = 'Red'            
-            diff = Rclose - math.ceil(close)
-            Rclose = math.ceil(close)
-            print(diff)
-
-    
-    elif brick == 'Red':
-    
-        if close <= Rclose-1:
-            brick = 'Red'
-            diff = Rclose - math.ceil(close)
-            Rclose = math.ceil(close)
-            print(diff)
-                            
-            
-        elif close >= Rclose+2:
-            brick = 'Green'            
-            diff = math.floor(close) - Rclose
-            Rclose = math.floor(close)
-            print(diff)
-            
-    
-    i+=1
-    
-    
-    
-#    
-#    
-'''    
