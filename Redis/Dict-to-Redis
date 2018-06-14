@@ -9,3 +9,7 @@ testdict = conn.hgetall("pythonDict")
 
 df_test = pd.DataFrame.from_dict(testdict,'index')
 df_test
+
+
+
+df_test = pd.DataFrame.from_records([testdict],index='timestamp')
