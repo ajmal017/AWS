@@ -21,11 +21,15 @@ while True:
 
 ########
 redis_data = str(ticks.get('instrument_token')) + str(';') + str(ticks.get('timestamp')) + str(';') + str(ticks.get('last_price')) + str(';') + str(ticks.get('volume'))
+
+## Initialization
 df=pd.DataFrame()
 freq = '1Min'
 instrument_token='11000834'
 desred_decimals = 2    
 
+
+## Get data from Rrdis and form Candles
 data = r4.lrange(instrument_token,0,-1)
 data = [i.strip('[]').split(';') for i in data]
 df = pd.DataFrame(data, columns=['instrument_token','timestamp','LTP','volume'])
@@ -35,6 +39,8 @@ df = df.iloc[::-1]
 df['vol'] = df['volume']-df['volume'].shift()
 ohlc = df['LTP'].resample(freq).ohlc()
 price = df['vol'].resample(freq).sum()
+
+## OHLC Candles and indicators
 df_ohlc = pd.concat([ohlc,price], axis=1)
 df_ohlc["change"] = np.log(df_ohlc["close"] / df_ohlc["close"].shift())
 df_ohlc['volatility-21'] = df_ohlc.change.rolling(21).std().shift()
@@ -42,6 +48,8 @@ df_ohlc['SMA-7'] = df_ohlc['close'].rolling(window=7).mean()
 df_ohlc['SMA-7'].fillna(0, inplace=True)
 df_ohlc['EMA-7'] = df_ohlc['close'].ewm(span=7, adjust=False).mean()
 
+
+## Round OHLC
 df_ohlc['open'] = df_ohlc['open'].apply(lambda x: round(x,desred_decimals))
 df_ohlc['high'] = df_ohlc['high'].apply(lambda x: round(x,desred_decimals))
 df_ohlc['low'] = df_ohlc['low'].apply(lambda x: round(x,desred_decimals))
