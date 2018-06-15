@@ -25,6 +25,11 @@ df=pd.DataFrame()
 freq = '1Min'
 instrument_token='10012930_backup'
 
+df=pd.DataFrame()
+freq = '1Min'
+instrument_token='11000834'
+desred_decimals = 2    
+
 data = r4.lrange(instrument_token,0,-1)
 data = [i.strip('[]').split(';') for i in data]
 df = pd.DataFrame(data, columns=['instrument_token','timestamp','LTP','volume'])
@@ -35,6 +40,11 @@ df['vol'] = df['volume']-df['volume'].shift()
 ohlc = df['LTP'].resample(freq).ohlc()
 price = df['vol'].resample(freq).sum()
 df_ohlc = pd.concat([ohlc,price], axis=1)
+
+df_ohlc['open'] = df_ohlc['open'].apply(lambda x: round(x,desred_decimals))
+df_ohlc['high'] = df_ohlc['high'].apply(lambda x: round(x,desred_decimals))
+df_ohlc['low'] = df_ohlc['low'].apply(lambda x: round(x,desred_decimals))
+df_ohlc['close'] = df_ohlc['close'].apply(lambda x: round(x,desred_decimals))
 ########
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
