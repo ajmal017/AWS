@@ -88,7 +88,8 @@ def Get_Start_Index(df):
     startindex
     return startindex
 
-def Renko(df):
+def Renko(df):    
+    Find_First_Brick_Color(df)
     i = Get_Start_Index(df)    
     brick= df.at[i,'brick']
     close = df.at[i,'close']
@@ -115,7 +116,7 @@ def Renko(df):
                 floor = m.floor(close)
                 ceil = m.ceil(close)
 #                print(df.loc[i, ['date','close']])
-                print(df.loc[j, 'date'],"  Green","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil), " : ",ceil+floor)
+                print(df.loc[j, 'timestamp'],"  Green","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
                 j=i
 #                print('Floor:',floor)
 #                print('Ceil:',ceil)
@@ -127,7 +128,7 @@ def Renko(df):
                 brick = 'Red'            
                 floor = m.floor(close)
                 ceil = m.ceil(close)
-                print(df.loc[j, 'date'],"  Red  ","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
+                print(df.loc[j, 'timestamp'],"  Red  ","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
                 j=i
         
         elif brick == 'Red':
@@ -136,14 +137,14 @@ def Renko(df):
                 brick = 'Red'
                 floor = m.floor(close)
                 ceil = m.ceil(close)    
-                print(df.loc[j, 'date'],"  Red  ","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
+                print(df.loc[j, 'timestamp'],"  Red  ","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
                 j=i
                 
             elif close >= ceil+2:
                 brick = 'Green'            
                 floor = m.floor(close)
                 ceil = m.ceil(close)
-                print(df.loc[j, 'date'],"  Green","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
+                print(df.loc[j, 'timestamp'],"  Green","    close: ","%05.2f"%close," floor:","{:02}".format(floor)," ceil:","{:02}".format(ceil))
                 j=i
         
         i+=1
@@ -153,5 +154,5 @@ def Renko(df):
 
 if __name__ == '__main__':
     data = Get_Data_From_Redis('11000834')    
-    df = Renko(data)
+    df = Renko(data)    
     
