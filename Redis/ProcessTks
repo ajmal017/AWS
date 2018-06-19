@@ -50,11 +50,12 @@ df_ohlc['EMA-7'] = df_ohlc['close'].ewm(span=7, adjust=False).mean()
 
 
 ## Round OHLC
-df_ohlc['open'] = df_ohlc['open'].apply(lambda x: round(x,desred_decimals))
-df_ohlc['high'] = df_ohlc['high'].apply(lambda x: round(x,desred_decimals))
-df_ohlc['low'] = df_ohlc['low'].apply(lambda x: round(x,desred_decimals))
-df_ohlc['close'] = df_ohlc['close'].apply(lambda x: round(x,desred_decimals))
-########
+pd.options.display.precision = 2
+#################################df_ohlc['open'] = df_ohlc['open'].apply(lambda x: round(x,desred_decimals))
+#################################df_ohlc['high'] = df_ohlc['high'].apply(lambda x: round(x,desred_decimals))
+#################################df_ohlc['low'] = df_ohlc['low'].apply(lambda x: round(x,desred_decimals))
+#################################df_ohlc['close'] = df_ohlc['close'].apply(lambda x: round(x,desred_decimals))
+#################################
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import pandas as pd
