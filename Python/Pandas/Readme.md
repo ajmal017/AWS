@@ -32,6 +32,8 @@ Read More [here](https://github.com/guipsamora/pandas_exercises#pandas-exercises
 
 ### [Python Finance Tutorial For Beginners](https://github.com/datacamp/datacamp-community-tutorials/blob/master/Python%20Finance%20Tutorial%20For%20Beginners/Python%20For%20Finance%20Beginners%20Tutorial.ipynb)
 ***
+### SSA Notes
+[SSA Notes](>[AWS-SSA Notes](http://clusterfrak.com/notes/certs/aws_saa_notes/))
 
 ### [Kite Connect](https://github.com/zerodhatech/pykiteconnect)
 ***
