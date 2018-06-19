@@ -26,13 +26,13 @@
 
 ---
 
-What is Cloud Computing?
+What is Cloud Computing?   
 Cloud computing is the on-demand delivery of compute power, database storage, applications, and other IT resources through a cloud services platform via the internet with pay-as-you-go pricing.
 
-How Does Cloud Computing Work?
+How Does Cloud Computing Work?   
 Cloud computing provides a simple way to access servers, storage, databases and a broad set of application services over the Internet
 
-Why Amazon Web Services?
+Why Amazon Web Services?   
 **Amazon Web Services provides a highly reliable, scalable, low-cost infrastructure platform in the cloud.** Amazon Web Services provides a massive global cloud infrastructure that allows you to quickly innovate, experiment and iterate. Instead of waiting weeks or months for hardware, you can instantly deploy new applications, instantly scale up as your workload grows, and instantly scale down based on demand. Whether you need one virtual server or thousands, whether you need them for a few hours or 24/7, you still only pay for what you use
 
 ---
