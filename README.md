@@ -6,8 +6,6 @@
 
 >[Linux Academy - Orion ](http://bit.ly/2nB2gRi)
 
->[AWS-SSA Notes](http://clusterfrak.com/notes/certs/aws_saa_notes/)
-
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
 >[AWS Labs](https://qwiklabs.com/catalog?cloud=AWS)
