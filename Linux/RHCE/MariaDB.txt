@@ -12,7 +12,7 @@ mysql_secure_installation;
 
 mysql -uroot -ppassword -e "select @version; show databases";mysql -p;
 
-create user user3@'192.168.0.18' identified by 'Sonidg5l!';
+create user user3@'192.168.0.18' identified by 'sdfjhkjhdf';
 grant all privileges on *.* to user3@'192.168.0.18';
 flush privileges;
 SHOW GRANTS FOR user3@'192.168.0.18';
