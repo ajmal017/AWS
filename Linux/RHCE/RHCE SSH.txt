@@ -1,0 +1,75 @@
+# Check the link below, in descripton below the video 
+
+# Server1 
+# Make sure Firewall and SELinux is running
+hostnamectl;sleep 2;c;
+hostname -I;sleep 2;c;
+systemctl status firewalld;sleep 2;c;
+getenforce;sleep 2;c;
+useradd user;sleep 2;c;
+echo p | passwd --stdin user;sleep 2;c;
+id user;sleep 2;c;
+
+yum install openssl openssh-server;sleep 2;c;
+systemctl is-enabled sshd;sleep 2;c;
+systemctl status sshd;sleep 2;c;
+
+firewall-cmd --permanent --add-service=telnet;sleep 2;c;
+firewall-cmd --reload;sleep 2;c;
+ssh-keygen; 
+
+ssh-copy-id user@server2;
+
+systemctl  restart sshd;sleep 2;c;
+ssh-agent bash;  sleep 2;c;
+ssh-add;sleep 2;c;
+ssh user@server2;sleep 2;c;
+ssh user@server2 mkdir test;sleep 2;c;
+
+# Restrict Root login,Uses and Port  on SSH services
+
+vim /etc/ssh/sshd_config;
+Protocol 2
+#AllowUsers user
+Permitrootlogin no
+Port 2200
+#MaxSessions 3
+ClientAliveInterval 300
+ClientAliveCountMax 4
+
+firewall-cmd --permanent --add-port=2200/tcp;sleep 2;c;
+firewall-cmd --reload;sleep 2;c;
+
+semanage port -a -t ssh_port_t 2200 -p tcp;sleep 2;c;
+systemctl restart sshd;sleep 2;c;
+
+# If you dont want to remember port number
+
+vim .ssh/config;
+Host localhost
+HostName 192.168.0.200
+User user
+port 2200
+
+chmod 600 .ss./config;
+ssh localhost;
+
+
+# Server2
+
+systemctl status firewalld;sleep 2;c;
+getenforce;sleep 2;c;
+useradd user;sleep 2;c;
+echo p | passwd --stdin user;sleep 2;c;
+id user;sleep 2;c;
+
+#Install SSL and OpenSSH
+
+yum info openssl openssh-server -y;sleep 2;c;
+systemctl enable sshd;sleep 2;c;
+systemctl start sshd;sleep 2;c;
+
+firewall-cmd --permanent --add-service=telnet;sleep 2;c;
+firewall-cmd --reload;sleep 2;c;
+
+

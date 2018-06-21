@@ -1,0 +1,76 @@
+###Link to this file is the description below;
+
+# Server2
+hostname;sleep 2;c
+hostname -I;sleep 2;c
+firewall-cmd --state;sleep 3;c
+getenforce;sleep 3;c
+yum install targetcli net-tools -y;sleep 3;c
+systemctl start target;sleep 3;c
+systemctl enable target;sleep 3;c
+lsblk;sleep 3;c
+targetcli;sleep 3;c
+
+#Creating a Backstore
+backstores/fileio create testfile /tmp/fileio 500M write_back=false
+backstores/block create name=block dev=/dev/sdb
+
+#Create the iSCSI Target and Portal
+iscsi/
+create iqn.2017-03.com.example:target
+ls
+
+# Create a LUN
+iqn.2017-03.com.example:target/tpg1/
+luns/ create /backstores/fileio/testfile
+luns/ create /backstores/block/block
+ls
+
+#Create an ACL
+acls/
+create iqn.2017-03.com.example:client
+ls
+exit
+
+# iSCSI Firewall Rules
+netstat -antup | grep 3260;sleep 3;c
+firewall-cmd --permanent --add-port=3260/tcp;firewall-cmd --reload;sleep 3;c
+
+
+# Server1 
+hostname;sleep 2;c
+hostname -I;sleep 2;c
+firewall-cmd --state;sleep 3;c
+getenforce;sleep 3;c
+echo "InitiatorName=iqn.2017-03.com.example:client" > /etc/iscsi/initiatorname.iscsi;sleep 3;c
+yum install iscsi-initiator-utils targetcli -y;sleep 3;c
+systemctl enable iscsid iscsi;sleep 3;c
+systemctl start iscsid iscsi;sleep 3;c
+
+iscsiadm --mode discovery --type sendtargets --portal 192.168.0.200;sleep 3;c
+iscsiadm -m node -T iqn.2017-03.com.example:target -l;sleep 3;c
+iscsiadm -m session -P 0;sleep 3;c
+lsblk --scsi;sleep 3;c
+
+
+systemctl restart iscsid;sleep 3;c
+mkdir /iscsi-block;sleep 3;c
+mkdir /iscsi-fileio;sleep 3;c
+mkfs.xfs /dev/sdc;sleep 3;c
+mkfs.xfs /dev/sdd;sleep 3;c
+
+
+df -h;sleep 3;c
+echo "/dev/sdc /iscsi-block xfs _netdev  0 0
+/dev/sdd  /iscsi-fileio xfs _netdev  0 0" >> /etc/fstab;sleep 3;c
+
+mount -a;sleep 3;c
+df -h;sleep 3;c
+#Perform the actual log out
+iscsiadm -m session -P 0;sleep 3;
+iscsiadm -m node -u;sleep 3;
+iscsiadm -m session -P 0;sleep 3;systemct
+ls;
+
+
+

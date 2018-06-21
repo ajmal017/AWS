@@ -1,0 +1,117 @@
+hostnamectl set-hostname server1.example.com;
+yum install postfix mutt mailx vim -y;
+systemctl start postfix;
+systemctl enable postfix;
+firewall-cmd --permanent --add-service=smtp;
+firewall-cmd --reload;
+setsebool -P allow_postfix_local_write_mail_spool on;
+useradd tecmint;
+echo p | passwd --stdin tecmint;
+
+
+systemctl -l status postfix 
+journalctl -xn 
+postconf -n
+
+Server1: /etc/postfix/main.cf
+------------------------------
+myhostname = server1.example.com
+mydomain = mydomain.com 
+myorigin = $mydomain 
+inet_interfaces = loopback-only 
+mydestination = 
+relayhost = 192.168.0.200
+inet_protocols = ipv4
+home_mailbox = Maildir/
+
+
+vim
+
+systemctl restart postfix;
+echo "test Girish" > /mailbody.txt;
+echo "test Girish" > /root/mailbody.txt;
+
+mutt -s "Part 9-RHCE series" tecmint@mydomain.com < mailbody.txt;
+su - tecmint mail
+
+##############################################################################
+##:g/^\(#\|$\)/d
+
+hostnamectl set-hostname server2.example.com;
+yum install postfix mutt mailx -y;
+systemctl start postfix;
+systemctl enable postfix;
+firewall-cmd --permanent --add-service=smtp;
+firewall-cmd --reload;
+setsebool -P allow_postfix_local_write_mail_spool on;
+useradd tecmint;
+echo p | passwd --stdin tecmint;
+
+
+Server2: /etc/postfix/main.cf
+------------------------------
+myhostname = server2.example.com 
+mydomain = mydomain.com 
+myorigin = $mydomain 
+inet_interfaces = all 
+mydestination = $myhostname, localhost.$mydomain, localhost, $mydomain 
+mynetworks = 192.168.0.1/24, 127.0.0.0/8
+
+
+systemctl restart postfix;
+##############################################################################
+server2.example.com.    IN  A           192.168.0.200
+example.com.            IN  MX          server2.example.com
+
+
+
+
+
+########### Step1 - Server 2
+firewall-cmd --state;
+getenforce;
+host server1;
+host server2;
+host dns;
+host -t NS example.com;
+host -t MX example.com;
+postfix check;
+postconf -n;
+useradd user;
+echo p | passwd --stdin user;
+
+########### Step2 - Server 1
+
+firewall-cmd --state;
+getenforce;
+host server1;
+host server2;
+host dns;
+host -t NS example.com;
+host -t MX example.com;
+postfix check;
+postconf -n;
+useradd user;
+echo p | passwd --stdin user;
+echo "Test Mail Body" > /mailbody.txt;
+echo "Test Mail Body" > /root/mailbody.txt;
+postsuper -d ALL;
+mutt -s "Testing Null Client" user@example.com < mailbody.txt;
+tail -f /var/log/maillog;
+
+########### DNS
+firewall-cmd --state;
+getenforce;
+cat /etc/named.conf; 
+cat /var/named/forward.example;
+cat /var/named/reverse.example;
+########### 
+
+Null Client: 192.168.0.100        (hostname :server1.example.com) 
+Mail Relay Server: 192.168.0.200  (hostname :server2.example.com)
+DNS Server : 192.168.0.50	  (hostname :dns.example.com)
+
+
+Temporary lookup failure (in reply to RCPT TO command))
+
+asghar_ghori2002@yahoo.com

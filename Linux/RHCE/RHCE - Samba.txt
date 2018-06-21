@@ -1,0 +1,143 @@
+Link to this file is the description below the video
+
+##Server 1
+hostnamectl;c
+hostname -I;c
+firewall-cmd --state;c
+getenforce;c
+yum install -y samba samba-client;c
+mkdir /sambashare;c
+getsebool -a | grep samba_export;c
+getsebool -a | grep samba_share_nfs;c
+setsebool -P samba_export_all_ro=1 samba_export_all_rw=1 samba_share_nfs=1;c
+semanage fcontext -a -t samba_share_t "/sambashare(/.*)?";c
+restorecon /sambashare/;c
+ll -Zd /sambashare;c
+firewall-cmd --permanent --add-service=samba;c
+firewall-cmd --reload;c
+cd /etc/samba;c
+mv smb.conf smb.conf.org.backup;c
+
+echo '[global]
+workgroup      = MYLABSERVER
+server string  = 192.168.0.100
+hosts allow    = 127. 192.168.
+interfaces     = lo enp0s3 192.168.0.
+passdb backend = smbpasswd
+security       = user
+log file       = /var/log/samba/%m.log
+max log size   = 5000
+
+[sambashare]
+comment        = /sambashare
+browseable     = yes
+path           = /sambashare
+public         = yes
+valid users    = user01
+write list     = user01
+writable       = yes
+' > /etc/samba/smb.conf;c
+
+echo "* - nofile 16384" >> /etc/security/limits.conf;
+testparm -s;c
+useradd user01;c
+echo p | passwd --stdin user01;c
+#smbpasswd -a user01;
+printf "p\np\n" | smbpasswd -a -s user01;c
+cat /var/lib/samba/private/smbpasswd;c
+pdbedit -Lv;c
+
+systemctl restart smb;c
+systemctl enable smb;c
+systemctl status smb -l;c
+touch /sambashare/file-on-server1.txt;c
+smbclient -L //localhost -U user01;
+
+
+##Server 2
+yum install -y samba samba-client cifs-utils;c
+useradd user01;c
+echo p | passwd --stdin user01;c
+smbclient -L //192.168.0.100/sambashare -U user01;c
+mkdir /sharedrive;c
+echo "//192.168.0.100/sambashare /sharedrive  cifs username=user01,password=p 0 0" >> /etc/fstab;c
+df -h;c
+mount -a;c
+df -h;c
+
+
+vim /etc/fstab;c
+//192.168.0.100/sambashare /sharedrive  cifs rw,credentials=/etc/samba/sharedcred 0 0;c
+
+# Collabration on Server1
+useradd user5;c
+useradd user6;c
+echo p | passwd --stdin user5;c
+echo p | passwd --stdin user6;c
+groupadd -g 8765 smbgrp;c
+usermod -G smbgrp user5;c
+usermod -G smbgrp user6;c
+cat /etc/group | grep smbgrp;c
+mkdir /smbgroup;c
+chgrp smbgrp /smbgroup/;c
+chmod 0770 /smbgroup/;c
+getsebool -a | grep samba_export;c
+setsebool -P samba_export_all_ro=1 samba_export_all_rw=1 samba_share_nfs=1;c
+semanage fcontext -at samba_share_t "/smbgroup(/.*)?";c
+restorecon /smbgroup;c
+ll -Zd /smbgroup;c
+firewall-cmd --permanent --add-service=samba;firewall-cmd --reload;c
+
+
+echo "[smbgroup]
+comment  	= /smbgroup
+browsable	= yes
+path		= /smbgroup
+public		= no
+valid users	= @smbgrp
+write list	= @smbgrp
+writable	= yes
+force group	= +smbgrp
+create mask     = 0770" >> /etc/samba/smb.conf;c
+
+testparm -s;c
+
+printf "p\np\n" | smbpasswd -a -s user5;c
+printf "p\np\n" | smbpasswd -a -s user6;c
+pdbedit -Lv ;c
+systemctl restart smb;c
+smbclient -L //localhost -U user5;c
+
+
+# Collabration on Server2
+useradd user5;c
+useradd user6;c
+echo p | passwd --stdin user5;c
+echo p | passwd --stdin user6;c
+groupadd -g 8765 smbgrp;c
+usermod -G smbgrp user5;c
+usermod -G smbgrp user6;c
+
+mkdir /collabrate;c
+mount //192.168.0.100/smbgroup /collabrate cifs  username=user5,password=p
+
+
+smbclient -L //192.168.0.100 -U user5;c 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

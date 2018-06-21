@@ -1,0 +1,24 @@
+Server1
+yum install nfs-utils policycoreutils-python -y;sleep 3;clear
+echo "/srv/nfsexport  *(rw)" > /etc/exports;sleep 3;clear
+mkdir /srv/nfsexport;sleep 3;clear
+semanage fcontext -a -t nfs_t "/srv/nfsexport(/.*)?";sleep 3;clear
+restorecon -Rv /srv/nfsexport;sleep 3;clear
+systemctl start nfs-server;sleep 3;clear
+systemctl enable nfs-server;sleep 3;clear
+firewall-cmd --permanent --add-service nfs; firewall-cmd --reload;sleep 3;clear
+showmount -e localhost;sleep 3;clear
+systemctl start firewalld;sleep 3;clear
+firewall-cmd --permanent --add-service mountd --add-service rpc-bind; firewall-cmd --reload;sleep 3;clear
+touch  /srv/nfsexport/filegs44;sleep 3;clear
+
+Server2
+yum install nfs-utils -y;sleep 3;clear
+mkdir /mnt/nfs; mount 192.168.0.100:/srv/nfsexport /mnt/nfs;sleep 3;clear
+systemctl status remote-fs.target;sleep 3;clear
+ll /mnt/nfs;sleep 3;clear;
+echo "192.168.0.100:/srv/nfsexport /mnt/nfs nfs _netdev 0 0" >> /etc/fstab;sleep 3;clear
+umount /mnt/nfs;sleep 3;clear;
+ll /mnt/nfs;sleep 3;clear;
+mount -a;sleep 3;clear;
+ll /mnt/nfs;sleep 3;clear;

@@ -1,0 +1,87 @@
+yum install authconfig-gtk.x86_64 nss-pam-ldapd -y;yum groups install -y "Directory Client";c;
+authconfig-gtk;
+
+
+yum install -y ipa-client ipa-admintools ;
+ipa-client-install --force-ntpd --force-join;
+
+kinit admin;
+ipa-getkeytab -s labipa.example.com -p host/server1.example.com -k /etc/krb5.keytab;
+kinit -k -t /etc/krb5.keytab host/server1.example.com;
+ipa-getkeytab -s labipa.example.com -p nfs/server1.example.com -k /etc/krb5.keytab;
+kinit -k -t /etc/krb5.keytab nfs/server1.example.com;
+kvno -k /etc/krb5.keytab host/server1.example.com;
+kvno -k /etc/krb5.keytab nfs/server1.example.com;
+su - alice;
+
+
+ipa-getkeytab -s labipa.example.com -p host/server2.example.com -k /etc/krb5.keytab;
+ipa-getkeytab -s labipa.example.com -p host/server3.example.com -k /etc/krb5.keytab;
+
+ipa-getkeytab -s labipa.example.com -p nfs/server1.example.com -k /etc/krb5.keytab;
+ipa-getkeytab -s labipa.example.com -p nfs/server2.example.com -k /etc/krb5.keytab;
+ipa-getkeytab -s labipa.example.com -p nfs/server3.example.com -k /etc/krb5.keytab;
+
+
+
+kvno -k /etc/krb5.keytab host/server1.example.com;
+ipa-getkeytab -s labipa.example.com -p host/server1.example.com -k /etc/krb5.keytab;
+kvno -k /etc/krb5.keytab host/server1.example.com;
+kinit -k -t /etc/krb5.keytab host/server1.example.com;
+kvno -k /etc/krb5.keytab host/server1.example.com;
+
+kvno -k /etc/krb5.keytab host/server2.example.com;
+ipa-getkeytab -s labipa.example.com -p host/server2.example.com -k /etc/krb5.keytab;
+kvno -k /etc/krb5.keytab host/server2.example.com;
+kinit -k -t /etc/krb5.keytab host/server2.example.com;
+kvno -k /etc/krb5.keytab host/server2.example.com;
+
+
+kvno -k /etc/krb5.keytab nfs/server1.example.com;
+kinit -k -t /etc/krb5.keytab nfs/server1.example.com;
+kvno -k /etc/krb5.keytab nfs/server1.example.com;
+
+ipa-getkeytab -s labipa.example.com -p nfs/server2.example.com -k /etc/krb5.keytab;
+kvno -k /etc/krb5.keytab nfs/server2.example.com;
+kinit -k -t /etc/krb5.keytab nfs/server2.example.com;
+kvno -k /etc/krb5.keytab nfs/server2.example.com;
+
+#Server 1
+mkdir /secureshare;sleep 3 ;
+touch /secureshare/file-on-secure-server;
+semanage fcontext -at nfs_t "/secureshare(/.*)?";sleep 3 ;
+restorecon -Rv /secureshare;sleep 3 ;
+chmod 777 /secureshare;sleep 3 ;
+echo "/secureshare *(rw,sec=krb5p)" > /etc/exports;sleep 3 ;
+systemctl restart nfs-server;sleep 3 ;
+exportfs -avr;sleep 3 ;
+showmount -e localhost;sleep 3 ;
+firewall-cmd --permanent --add-service={nfs,mountd,rpc-bind};
+firewall-cmd --reload;
+
+systemctl start nfs-secure-server;sleep 3 ;
+systemctl enable nfs-secure-server;sleep 3 ;
+
+server1
+192.168.0.100
+
+
+#Server2
+yum group install "Network Files Systems Clients" -y;
+yum install nfs-utils -y;
+mkdir /securenfs;
+systemctl enable nfs-secure;
+systemctl start nfs-secure;
+mount -o sec=krb5p server1.example.com:/secureshare /securenfs;
+ll /securenfs;
+su - ldapuser1;
+kinit;
+klist -k;
+
+
+
+Difference Between RHEL
+RHEL 7.0 must be enabled
+RHEL 7.1/7.2 gives error when trying to enable
+RHEL 7.3 systemctl enable command doesnt give an error but doesnt do anything
+

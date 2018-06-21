@@ -1,0 +1,149 @@
+##Link to this file is in the description box below
+
+#Server1
+#Setup a KDC server
+
+yum install krb5-server krb5-workstation pam_krb5 net-tools -y;sleep 3;c
+echo "192.168.0.100 server1.example.com" >> /etc/hosts;sleep 3;c
+echo "192.168.0.200 server2.example.com" >> /etc/hosts;sleep 3;c
+
+echo "includedir /etc/krb5.conf.d/
+
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ dns_lookup_realm = false
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+ rdns = false
+ default_realm = EXAMPLE.COM
+ default_ccache_name = KEYRING:persistent:%{uid}
+
+[realms]
+ EXAMPLE.COM = {
+  kdc = server1.example.com
+  admin_server = server1.example.com
+ }
+
+[domain_realm]
+ .example.com = EXAMPLE.COM
+ example.com = EXAMPLE.COM
+" > /etc/krb5.conf; sleep 3;c
+
+echo "[kdcdefaults]
+ kdc_ports = 88
+ kdc_tcp_ports = 88
+
+[realms]
+ EXAMPLE.COM = {
+  #master_key_type = aes256-cts
+  acl_file = /var/kerberos/krb5kdc/kadm5.acl
+  dict_file = /usr/share/dict/words
+  admin_keytab = /var/kerberos/krb5kdc/kadm5.keytab
+  supported_enctypes = aes256-cts:normal aes128-cts:normal des3-hmac-sha1:normal arcfour-hmac:normal camellia256-cts:normal camellia128-cts:normal des-hmac-sha1:normal des-cbc-md5:normal des-cbc-crc:normal
+ }" > /var/kerberos/krb5kdc/kdc.conf;sleep 3;c
+
+echo "*/admin@EXAMPLE.COM     *" > /var/kerberos/krb5kdc/kadm5.acl;sleep 3;c
+
+#Create the actual Kerberos data
+kdb5_util create -s -r EXAMPLE.COM;sleep 3;c
+
+systemctl enable kadmin krb5kdc;sleep 3;c
+systemctl start kadmin krb5kdc;sleep 3;c
+firewall-cmd --permanent --add-service=kerberos;sleep 3;c
+firewall-cmd --reload;sleep 3;c
+netstat -antup | grep krb;sleep 3;c
+systemctl status kadmin krb5kdc;;sleep 3;c
+useradd krbtest;sleep 3;c
+
+#Add KDC Principals
+kadmin.local;
+addprinc root/admin;
+addprinc krbtest;
+addprinc -randkey host/server1.example.com;
+ktadd host/server1.example.com;
+quit;
+
+
+vim /etc/ssh/ssh_config;
+#Before we test our configuration, we need to alter some of our SSH configuration, at /etc/ssh/ssh_config.
+#Find the lines # GSSAPIAuthentication no and # GSSAPIDelegateCredentials no.
+#Uncomment the lines and change no to yes for each.
+
+systemctl reload sshd; sleep 3;c
+authconfig --enablekrb5 --update; sleep 3;c
+firewall-cmd --permanent --add-port=749/tcp; sleep 3;c
+firewall-cmd --reload; sleep 3;c
+su - krbtest; sleep 3;c
+kinit; sleep 3;c
+klist; sleep 3;c
+ssh server1.example.com; sleep 3;c
+
+
+#Client Authentication 
+#Server 2
+
+
+yum install krb5-workstation pam_krb5 net-tools -y;sleep 3;c
+echo "192.168.0.100 server1.example.com" >> /etc/hosts;sleep 3;c
+echo "192.168.0.200 server2.example.com" >> /etc/hosts;sleep 3;c
+
+
+echo "includedir /etc/krb5.conf.d/
+
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ dns_lookup_realm = false
+ ticket_lifetime = 24h
+ renew_lifetime = 7d
+ forwardable = true
+ rdns = false
+ default_realm = EXAMPLE.COM
+ default_ccache_name = KEYRING:persistent:%{uid}
+
+[realms]
+ EXAMPLE.COM = {
+  kdc = server1.example.com
+  admin_server = server1.example.com
+ }
+
+[domain_realm]
+ .example.com = EXAMPLE.COM
+ example.com = EXAMPLE.COM
+" > /etc/krb5.conf; sleep 3;c
+
+useradd krbtest;
+kadmin;
+addprinc -randkey host/server2.example.com;
+ktadd host/server2.example.com;
+quit;
+
+vim /etc/ssh/ssh_config;
+systemctl restart sshd;
+authconfig --enablekrb5 --update
+su - krbtest;
+kinit;
+klist;
+ssh server1.example.com;
+ssh server2.example.com;
+
+
+
+
+
+
+
+
+
+
+
+
+

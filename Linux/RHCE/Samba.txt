@@ -1,0 +1,36 @@
+yum install -y samba samba-client;
+mkdir /sambashare;
+getsebool -a | grep samba_export;
+getsebool -a | grep samba_share_nfs;
+setsebool -P samba_export_all_ro=1 samba_export_all_rw=1 samba_share_nfs=1;
+semanage fonctext -at samba_share_t "/sambashare(/.*)?";
+restorecon /sambashare/;
+ll -Zd /sambashare/;
+firewall-cmd --permanent --add-service=samba;
+firewall-cmd --reload;
+cd /etc/samba;
+mv smb.conf smb.conf.org.backup;
+
+vim /etc/smb.conf
+[global]
+workgroup      = MYLABSERVER
+serverstring   = 192.168.0.200
+hosts allow    = 127. 192.168.0.1
+interfaces     = lo enp0s3 192.168.0.
+passdb backend = smbpasswd
+security       = user
+log file       = /var/log/samba/%m.log
+max log size   = 5000
+
+[sambashare]
+comment        = /sambashare
+browseable     = yes
+path           = /sambashare
+valid users    = user01 
+writable       = yes
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+»»»»Link to this file in the description below
+
+
+»»»»Server 1
+
+yum install -y bind-utils bind ;
+systemctl start named;
+systemctl enable named;
+firewall-cmd --permanent --add-service=dns;
+firewall-cmd --reload;
+vi /etc/named.conf;
+#–– listen-on port 53 { 127.0.0.1; }; # replace 127.0.0.1 with ‘any’
+#–– allow-query { localhost }; # replace localhost with ‘any’
+#–– dnssec-validation no;
+
+named-checkconf;
+systemctl restart named;
+systemctl status named;
+
+»»»»Testing:
+nslookup google.com 127.0.0.1 # or local IP of server;
+dig@127.0.0.1 google.com # or local IP of server;
+
+»»»» Client utilities and files for troubleshooting DNS
+nslookup;
+dig;
+ping;
+vim /etc/resolv.conf: Client configuration pointing to DNS server(s);

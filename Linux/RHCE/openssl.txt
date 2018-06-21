@@ -1,0 +1,10 @@
+openssl genrsa -out /mail.sgirish.com.key 2048
+
+openssl req -new -x509 -nodes -keyout /mail.sgirish.com.key -days 730
+
+openssl req -new -x509 -nodes -out mail.sgirish.com.crt -keyout /mail.sgirish.com.key -days 730
+
+mail.sgirish.com.crt
+mail.sgirish.com.key
+
+5c95386f8e0be110

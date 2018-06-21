@@ -1,0 +1,34 @@
+#Server 1
+yum install ntp -y;
+systemctl enable ntpd;
+systemctl start ntpd;
+ntpq -p;   # where is it getting time from;
+ntpstat ; # Which server it is syncronised to
+
+vim /etc/ntp.conf
+##comment all the server and add new server IP
+server 192.168.0.200 
+
+
+systemctl restart ntpd
+systemctl status ntpd
+firewall-cmd --permanent --add-service ntp
+firewall-cmd --reload
+ntpdq -p
+
+
+
+
+#Server 2
+yum install ntp -y;
+
+vim /etc/ntp.conf;
+peer server1;
+
+firewall-cmd --permanent --add-service ntp;
+firewall-cmd --reload;
+
+systemctl enable ntpd;
+systemctl start ntpd;
+ntpq -p;
+ntpstat;

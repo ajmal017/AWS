@@ -1,0 +1,7 @@
+ssh -Y -i "ugshcool.me.aws.key.pem" centos@ec2-52-38-123-195.us-west-2.compute.amazonaws.com
+
+
+Access Key ID:
+AKIAITLQ7AALJN7GML7Q
+Secret Access Key:
+NQsYtJjU4VhCVHXo0fbd/vNw+pLz3Onb8P+fJB6J

@@ -1,0 +1,55 @@
+Link to this file is in the descritption below the videos
+ 
+
+#server 1;
+hostname;sleep 2;c;
+hostname -I;sleep 2;c;
+host server2;sleep 2;c;
+host -t NS example.com;sleep 2;c;
+host -t MX example.com;sleep 2;c;
+cat /etc/hosts;sleep 2;c;
+cat /etc/resolv.conf;sleep 2;c;
+yum install bind-utils vim postfix -y;c;
+systemctl start postfix; systemctl enable postfix;c;
+postconf -e 'relayhost=[server2.example.com]';c;
+postconf -e 'inet_interfaces=loopback-only';c;
+postconf -e 'mydestination=';c;
+postconf -e 'inet_protocols=ipv4';c;
+postconf -e 'mydomain=example.com';c;
+systemctl restart postfix;c;
+netstat -plntu;sleep 5;c;
+echo 'alias "mlog=tail -f /var/log/maillog"' >> .bashrc;c;
+bash;c;
+mail -s test1 root@server2.example.com < .;mlog;
+
+
+# server2
+hostname;sleep 2;c;
+hostname -I;sleep 2;c;
+host server2;sleep 2;c;
+host -t NS example.com;sleep 2;c;
+host -t MX example.com;sleep 2;c;
+cat /etc/hosts;sleep 2;c;
+cat /etc/resolv.conf;sleep 2;c;
+yum install bind-utils vim postfix -y;c;
+systemctl start postfix; systemctl enable postfix;c;
+postconf -e 'inet_interfaces=all';c;
+postconf -e 'mydestination = example.com,server2.example.com';c;
+postconf -e 'inet_protocols = ipv4';c;
+firewall-cmd --add-service smtp --permanent;firewall-cmd --reload;c;
+systemctl restart postfix;c;
+netstat -plntu;c;
+echo 'alias "mlog=tail -f /var/log/maillog"' >> .bashrc;c;
+bash;c;mail;c;
+
+
+
+#DNS
+systemctl status named;sleep 3;c;
+cat /var/named/forward.example; sleep 4;c;
+cat /var/named/reverse.example;sleep 4;c;
+cat /etc/named.conf;sleep 4;
+c;
+
+
+

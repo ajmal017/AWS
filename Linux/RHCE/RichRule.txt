@@ -1,0 +1,12 @@
+firewall-cmd --add-rich-rule="rule family="ipv4" source address="192.168.2.3" reject type="icmp-admin-prohibited"" --permanent
+
+firewall-cmd --add-rich-rule='rule family="ipv4" source address="10.0.1.0/24" service name="http" log prefix="HTTP Allow Rule" level="info" accept' --permanent
+
+
+cat /usr/lib/sysctl.d/50-default.conf | grep -ve ^# | grep -ve '^$';
+cat  /etc/init.d/network |grep net.ipv4.ip_forward;
+systemctl status tuned;
+sysctl net.ipv4.ip_forward;
+cat /etc/sysctl.conf |grep net.ipv4.ip_forward;
+sysctl -p;
+reboot;

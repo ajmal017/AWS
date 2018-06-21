@@ -1,0 +1,73 @@
+1) Install LAMP by using below cmd 
+yum install epel-release 
+yum install php-bcmath php-cli php-common php-dba php-devel php-gd php-mbstring php-mcrypt php-mysql php-pdo php-pspell php-recode php-snmp php-soap php-tidy php-xml php-xmlrpc php5-PHPMailer httpd httpd-devel mysql mysql-server mysql-devel openssl openssl-devel proftpd perl-Net-SSLeay
+
+
+2) Install webmin using below url inststructions
+https://www.server-world.info/en/note?os=CentOS_6&p=webmin
+
+
+3) Install virtualmin using below url instructions
+https://www.server-world.info/en/note?os=CentOS_6&p=virtualmin
+
+
+4) to create domain in virtualmin
+http://servers.hostik.com/instructions/virtualmin-addnewdomain.htm
+
+
+5) to create subdomain in virtualmin
+Choose the domain for which you would like to add the sub-server. ...
+Click Create Virtual Server .
+Click Sub-server there  is a tab for it
+Enter the Domain Name (SUB-DOMAIN) and Description for the Sub-server.
+Click Create Server .
+
+To resolve 503 login failed proftpd
+
+Comment lines AuthPAMConfig and AuthOrder in /etc/proftpd.conf and restart server
+
+#
+
+Use pam to authenticate (default) and be authoritative
+
+#AuthPAMConfig          proftpd
+
+#AuthOrder          mod_auth_pam.c* mod_auth_unix.c
+
+More details
+
+
+
+
+https://www.digitalocean.com/community/questions/proftpd-login-failing-with-530
+
+To disable the proftpd service use below cmd
+/etc/init.d/proftpd stop
+chkconfig proftpd off
+
+
+root ldmCY1xErXaBz
+
+ litemotive.com ldmCY1xErXaBz
+
+jvilovic@vip.hr
+
+[10:40:30 PM] Shailesh Raotole: [10:37:49 PM] Al Emran: 43.243.207.226
+
+gurukul
+
+case.12.LP
+[10:43:19 PM] Martin Solomon: okay
+[10:43:20 PM] Shailesh Raotole: hi r u there?
+[10:43:23 PM] Shailesh Raotole: ok
+
+
+
+Panel URL         : http://13.54.218.32/
+zadmin Password   : i8rYTAKxmTsF8rSR
+
+MySQL Root Password      : lOQnYfLW0cAoRF4h
+MySQL Postfix Password   : Er2K6qSNX1tZ45PC
+MySQL ProFTPd Password   : 8sxcZ68m0Lip3sY4
+MySQL Roundcube Password : oRAB2Qg9kDDUP37T
+swadesi mysql password :  a6e5asuse

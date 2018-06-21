@@ -1,0 +1,250 @@
+Link to this file is in the description below
+
+## Exercise 1
+##Configure the Default Apache Web Server
+c;cd /;c
+./e1;
+hostname;c
+hostname -I;c
+getenforce;c
+firewall-cmd --state;c
+useradd user1;c
+echo p | passwd --stdin user1;c
+useradd user10;c
+echo p | passwd --stdin user10;c
+useradd user11;c
+echo p | passwd --stdin user11;c
+
+yum install lynx elinks vim -y;sleep 2;c
+yum group install "Basic Web server" -y;sleep 2;c
+ps aux | grep http;sleep 2;c
+systemctl status httpd;sleep 2;c
+firewall-cmd --permanent --add-service={http,https};sleep 2;c
+firewall-cmd --reload;sleep 2;c
+systemctl enable httpd;sleep 2;c
+systemctl start httpd;sleep 2;c
+systemctl status httpd;sleep 2;c
+ps aux | grep http;sleep 2;c
+cd /var/www/html/;sleep 2;c
+echo "Exercise 1 : This is my new website" > index.html;sleep 2;c
+httpd -t;sleep 2;c
+elinks http://server1.example.com
+
+## Exercise 2
+##Modify the Default Web Server to Use a Different Home Page and Hostname
+cd /
+./e2;
+cd /var/www/html ;sleep 2;c
+echo "This is webserver1 (exercise 2)" > index.html;sleep 2;c
+echo "192.168.0.100 server1.example.com server1 webserver1.example.com webserver1" >> /etc/hosts;sleep 2;c
+sed -ie 's/root@localhost/root@webserver1.example.com/g' /etc/httpd/conf/httpd.conf;sleep 2;c
+echo "ServerName webserver1.example.com" >> /etc/httpd/conf/httpd.conf;sleep 2;c
+httpd -t;sleep 2;c
+elinks http://webserver1.example.com;sleep 2;c
+
+## Exercise 3
+## Extend the Web Server to Provide Access to a Private Directory
+./e3;
+mkdir /var/privusr;sleep 2;c
+chown user1:user1 /var/privusr ; chmod 0711 /var/privusr;sleep 2;c
+echo "Exercise 3:This is webserver1 providing user1 access to a private directory" > /var/privusr/index.html;sleep 2;c
+semanage fcontext -at httpd_sys_content_t "/var/privusr(/.*)?";sleep 2;c
+restorecon -Rv /var/privusr;sleep 2;c
+echo "DocumentRoot "/var"
+<Directory /var/privusr>
+AllowOverride AuthConfig
+</Directory>" >> /etc/httpd/conf/httpd.conf;sleep 2;c
+httpd -t;sleep 2;c
+echo "AuthType Basic
+AuthName "Password-protected User Contents. Enter your credentials to log in:"
+AuthUserFile "/etc/httpd/conf/.userdb"
+Require user user1" > /var/privusr/.htaccess ;sleep 2;c
+cd /etc/httpd/conf ; 
+htpasswd -c .userdb user1;sleep 2;c
+chgrp apache .userdb ; chmod 0640 .userdb;sleep 2;c
+systemctl restart httpd;sleep 2;c
+elinks http://webserver1.example.com/privusr ;sleep 2;c
+
+## Exercise 4
+##Modify the Web Server to Provide Access to Group-Managed Contents
+./e4;
+mkdir /var/privgrp;sleep 2;c
+groupadd dba ; usermod -G dba user10 ; usermod -G dba user11;sleep 2;c
+chgrp dba /var/privgrp ; chmod 0771 /var/privgrp;sleep 2;c
+echo "Exercise 4:This is webserver1 providing dba group members access to a directory." > /var/privgrp/index.html;sleep 2;c
+semanage fcontext -at httpd_sys_content_t "/var/privgrp(/.*)?";sleep 2;c
+restorecon -Rv /var/privgrp;sleep 2;c
+echo "DocumentRoot "/var"
+<Directory /var/privgrp>
+AllowOverride AuthConfig
+</Directory>" >> /etc/httpd/conf/httpd.conf;sleep 2;c
+httpd -t;sleep 2;c
+
+echo 'AuthType Basic
+AuthName "Password-protected Group Contents. Enter your credentials to log in:"
+AuthUserFile "/etc/httpd/conf/.grouppassworddb"
+AuthGroupFile "/etc/httpd/conf/.groupdb"
+Require group dba' > /var/privgrp/.htaccess;sleep 2;c
+
+cd /etc/httpd/conf/
+echo 'dba: user10 user11' > /etc/httpd/conf/.groupdb;sleep 2;c
+chgrp apache .groupdb ; chmod 0640 .groupdb;sleep 2;c
+htpasswd -c .grouppassworddb user10;sleep 2;c
+htpasswd .grouppassworddb user11;sleep 2;c
+systemctl restart httpd;sleep 2;c
+http://webserver1.example.com/privgrp
+
+
+
+## Exercise 5
+##Modify the Web Server to Limit Access to Select Hosts on a Non-Default Port
+./e5;
+vim /etc/httpd/conf/httpd.conf
+
+ServerAdmin root@webserver1.example.com
+ServerName webserver1.example.com:8989
+DocumentRoot “ /var”
+
+<Directory /var/privusr>
+AllowOverride AuthConfig
+Require host example.com
+Require ip 192.168.1.0/24
+</Directory>
+
+<Directory /var/privgrp>
+AllowOverride AuthConfig
+Require host example.com
+Require ip 192.168.1.0/24
+</Directory>
+
+httpd –t;sleep 2;c
+
+echo "Listen 8989" >> /etc/httpd/conf/httpd.conf;sleep 2;c
+
+systemctl restart httpd;sleep 2;c
+firewall-cmd --permanent --add-port 8989/tcp ; firewall-cmd --reload;sleep 2;c
+semanage port –at http_port_t –p tcp 8989;sleep 2;c
+semanage port –l | grep ^http_port_t;sleep 2;c
+http://webserver1.example.com:8989/privusr
+http://webserver1.example.com:8989/privgrp
+
+
+
+
+
+## Exercise 6
+##Configure a Simple Virtual Host
+./e6;
+echo '<VirtualHost *:80>
+ServerAdmin admin@vhost1.example.com
+DocumentRoot /var/www/html/vhost1
+ServerName vhost1.example.com
+ErrorLog logs/vhost1-error_log
+CustomLog logs/vhost1-access_log combined
+</VirtualHost>' > /etc/httpd/conf.d/vhost1.conf;sleep 2;c
+
+mkdir /var/www/html/vhost1;sleep 2;c
+echo "Excercise 6: his web page is to test virtual host" > /var/www/html/vhost1/index.html;sleep 2;c
+httpd -D DUMP_VHOSTS;sleep 2;c
+sed -ie 's/^192.168.0.100/#/g' /etc/hosts;sleep 2;c
+echo "192.168.0.100 server1.example.com server1 webserver1.example.com webserver1 vhost1.example.com vhost1" >> /etc/hosts;sleep 2;c
+systemctl restart httpd;sleep 2;c
+elinks http://vhost1.example.com;sleep 2;c
+
+
+
+## Exercise 7
+##Generate a Key Pair and Self-Signed Certificate
+./e7;
+yum -y install mod_ssl openssl nmap;sleep 2;c
+cd /etc/pki/tls/certs;sleep 2;c
+openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:2048 -out server1.example.com.key;sleep 2;c
+openssl req -new -key server1.example.com.key -out server1.example.com.csr;sleep 2;c
+openssl x509 -req -days 120 -signkey server1.example.com.key -in server1.example.com.csr -out server1.example.com.crt;sleep 2;c
+chmod 0600 server1.example.com.key ; mv server1.example.com.key ../private;sleep 2;c
+systemctl restart httpd;sleep 2;c
+nmap localhost;sleep 2;c
+openssl s_client -connect localhost:443 -state;sleep 2;c
+
+
+
+
+## Exercise 8
+##Configure a Secure Virtual Host
+./e8;
+mkdir /var/www/html/secure
+echo '<VirtualHost *:443>
+DocumentRoot “ /var/www/html/secure”
+ServerName server1.example.com:443
+SSLCertificateFile /etc/pki/tls/certs/server1.example.com.crt
+SSLCertificateKeyFile /etc/pki/tls/private/server1.example.com.key
+</VirtualHost>' >> /etc/httpd/conf.d/ssl.conf;sleep 2;c
+
+httpd -D DUMP_VHOSTS;sleep 2;c
+echo "Exercise 8 :This web page is to test a more complex virtual host " >> /var/www/html/secure/index.html;sleep 2;c
+restorecon -Rv /var/www/html;sleep 2;c
+firewall-cmd --permanent --add-service=https ; firewall-cmd --reload;sleep 2;c
+systemctl restart httpd;sleep 2;c
+elinks https://server1.example.com
+
+
+
+echo -e "$(tput bold) reg  bld  und   tput-command-colors$(tput sgr0)"
+
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 1: Configure the Default Apache Web Server $(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 2: Modify the Default Web Server to Use a Different Home Page and Hostname$(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 3:Extend the Web Server to Provide Access to a Private Directory$(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 4: Modify the Web Server to Provide Access to Group-Managed Contents$(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 5: Modify the Web Server to Limit Access to Select Hosts on a Non-Default Port $(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 6: Configure a Simple Virtual Host $(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 7: Generate a Key Pair and Self-Signed Certificate $(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise 8: Configure a Secure Virtual Host $(tput sgr0)"
+sleep 3
+clear
+#! /bin/bash
+clear
+printf "\n"
+echo -e "$(tput bold) Exercise $(tput sgr0)"
+sleep 3
+clear
+
+
+ 
