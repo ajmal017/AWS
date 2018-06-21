@@ -1,7 +1,0 @@
-nmcli con add type bridge con-name TowerBridge ifname TowerBridge;
-nmcli con mod TowerBridge ip4 198.162.0.89/24 gw4 192.168.0.1 ipv4.method manual;
-nmcli con add type ethernet con-name br-slave-1 ifname enp0s3 master TowerBridge;
-nmcli con add type ethernet con-name br-slave-2 ifname enp0s8 master TowerBridge;
-nmcli con down TowerBridge;nmcli con up TowerBridge;
-nmcli con down br-slave-1;nmcli con up br-slave-1;
-nmcli con down br-slave-2;nmcli con up br-slave-2;
