@@ -1,4 +1,5 @@
 ## Nifty 50
+<pre>
 df_instrument = pd.read_pickle('E:/Trading Programs/00 Main Programs/pkl/NSEEQTokens.pkl')
 
 def tradingsymbol(stockname):    
@@ -24,3 +25,5 @@ def getNiftyData():
     
 
 getNiftyData()
+
+</pre>
