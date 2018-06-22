@@ -1,3 +1,34 @@
+## Login to Kite
+try:
+    df = pd.read_pickle('access_token_and_date.pkl')
+    kite = KiteConnect(api_key=df[0].api_key)
+    kite.set_access_token(df[0].access_token)
+    kite.holdings()    
+except ex.TokenException as token_error:
+    print(token_error, "Retrying")
+    try:
+        chrome_path = r"H:\chromedriver_win32\chromedriver.exe"
+        driver = webdriver.Chrome(chrome_path)
+        driver.get(
+            "https://kite.trade/connect/login?v=3&api_key=" + df[0].api_key)
+        Request_token = input('Enter the Request Token: ')
+        data = kite.generate_session(
+            Request_token, api_secret=df[0].secret_key)
+        kite.set_access_token(data["access_token"])
+        d1 = {'access_token': data["access_token"],
+              'api_key': df[0].api_key, 'secret_key': df[0].secret_key}
+        df = pd.DataFrame.from_dict(d1, "index")
+        df.to_pickle('access_token_and_date.pkl')
+        kite = KiteConnect(api_key=df[0].api_key)
+        kite.set_access_token(data["access_token"])        
+    except Exception as e:
+        raise e
+
+except Exception as e:
+    print("Authentication failed", str(e))
+
+########################################################################################################################################################
+
 import pandas as pd
 from kiteconnect import KiteConnect
 import kiteconnect.exceptions as ex
