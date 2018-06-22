@@ -15,12 +15,12 @@ logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(leve
 ## Get the Insrument Tokens
 df = pd.read_pickle("E:/Trading Programs/00 Main Programs/pkl/NSE_FUT.pkl")
 df1 = pd.read_pickle("E:/Trading Programs/00 Main Programs/pkl/NSE_BANKNIFTY_OPT.pkl")
-Bank_Nifty_Tokens= df1.instrument_token.tolist()
+Bank_Nifty_Tokens = df1.instrument_token.tolist()
 Fut_Tokens= df.instrument_token.tolist()
 tokens = Bank_Nifty_Tokens + Fut_Tokens
 
 
-## Login to Kite
+##Login to Kite
 try:
     df = pd.read_pickle('access_token_and_date.pkl')    
     kite = KiteConnect(api_key=df[0].api_key)
@@ -52,15 +52,16 @@ except ex.TokenException as token_error:
 except Exception as e:
     print("Authentication failed", str(e))
 
-    
-    
-# Initialise.
+
+#Initialise.
 kws = KiteTicker(apikey, access_token, debug=False)
+
 
 def on_ticks(ws, ticks):
     r.lpush("Ticks-Full",ticks)
     #print(ticks)
-    
+
+
 def on_connect(ws, response):
     logging.debug("on connect: {}".format(response))
     ws.subscribe(tokens)
@@ -105,7 +106,7 @@ r4.flushdb()
 print("Starting Ticker Processor")
 while True:
     data_str = r.lpop('Ticks-Full')
-    if data_str != None:
+    if data_str is not None:
         data_list = eval(data_str)
         for ticks in data_list:        
             r4.lpush(ticks.get('instrument_token'),str(ticks.get('instrument_token')) + str(';') + str(ticks.get('timestamp')) + str(';') + str(ticks.get('last_price')) + str(';') + str(ticks.get('volume')))            
