@@ -1,0 +1,26 @@
+## Nifty 50
+df_instrument = pd.read_pickle('E:/Trading Programs/00 Main Programs/pkl/NSEEQTokens.pkl')
+
+def tradingsymbol(stockname):    
+    return df_instrument[df_instrument.tradingsymbol==stockname].instrument_token.to_string(index=False)
+
+
+def getNiftyData():
+    url="https://www.nseindia.com/content/indices/ind_nifty50list.csv"
+    #url="https://www.nseindia.com/content/indices/ind_nifty500list.csv"
+    s=requests.get(url).content
+    df=pd.read_csv(io.StringIO(s.decode('utf-8')))
+    df.to_html('E:/Trading Programs/00 Main Programs/pkl/N50.html')
+    webbrowser.get("C:/Program Files (x86)/Google/Chrome/Application/chrome.exe %s").open("E:/Trading Programs/00 Main Programs/pkl/N50.html") 
+    df['Instrumment_Token'] = df['Symbol'].apply(tradingsymbol)
+    df = df[df['Series'] == 'EQ']
+    print("\n df - Nifty 50\n~~~~~~~~\n",df.head())
+    df['Instrumment_Token'] = df['Instrumment_Token'].astype(int)
+    results = df['Instrumment_Token'].tolist()            
+    print("\n Group By on Industry \n ~~~~~~~~~~~~~~~~~~~~\n",df.groupby('Industry')['Industry'].count())
+    print("\n Instrumnet Token List for Nifty50 \n ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n",df.Instrumment_Token.tolist())
+    #return results                   
+    
+    
+
+getNiftyData()
