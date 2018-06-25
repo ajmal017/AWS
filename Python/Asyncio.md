@@ -1,3 +1,4 @@
+<pre>
 import time
 import asyncio
 
@@ -24,7 +25,7 @@ if __name__ == '__main__':
     t1 = time.time()
     print('Took %.4f ms' % (1000*(t1-t0)))
     
-
+</pre>
 # Asyncio[](http://cheat.readthedocs.io/en/latest/python/asyncio.html#asyncio "Permalink to this headline")
 
 ## What is it[](http://cheat.readthedocs.io/en/latest/python/asyncio.html#what-is-it "Permalink to this headline")
