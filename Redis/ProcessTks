@@ -1,3 +1,7 @@
+
+# Remove list items it "None" is present ###------------------------------------------------------------------------------------------------
+data = [s for s in data if not "None" in s]
+####------------------------------------------------------------------------------------------------
 import pandas as pd
 import numpy as np
 import selenium3 as s
