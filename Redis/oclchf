@@ -72,3 +72,19 @@ while True:
             hourdate == str3[1]
         
 ##############################################################        
+
+df = pd.DataFrame()
+while r6.llen(instrument_token):
+    data = r6.rpop(instrument_token)
+    if "None" not in data:
+        data = data.split(';')
+        d = {'instrument_token':[data[0]],'timestamp':[data[1]],'LTP':[data[2]],'volume':[data[3]]} 
+        df1 = pd.DataFrame(d)
+        df1 = df1.astype(dtype= {"volume":"int32","LTP":"float32","instrument_token":"int32","timestamp":'datetime64[ns]'})
+        df = df.append(df1)
+df.timestamp = df.timestamp.astype('datetime64[ns]')
+df.timestamp.dt.minute[0]
+df.set_index('timestamp',inplace=True,drop=True)
+ohlc = df['LTP'].resample('1Min').ohlc()
+ohlc
+##############################################################        
