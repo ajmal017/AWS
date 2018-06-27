@@ -1,3 +1,23 @@
+# One Key #######################################################################################################
+
+src = redis.StrictRedis(host="localhost", port=6379,db=4)
+dst = redis.StrictRedis(host="localhost", port=6379,db=6)
+for key in src.keys("12562690"):
+    ttl = src.ttl(key)
+    # we handle TTL command returning -1 (no expire) or -2 (no key)
+    if ttl < 0:
+        ttl = 0
+    print("Dumping key: %s" % key)
+    value = src.dump(key)
+    print("Restoring key: %s" % key)
+    try:
+        dst.restore(key, ttl * 1000, value, replace=True)
+    except redis.exceptions.ResponseError:
+        print("Failed to restore key: %s" % key)
+        pass
+
+# ALL Keys #######################################################################################################
+
 #python Redis-Replication1.py "localhost:6379/4" "localhost:6379/6"
 
 import argparse
