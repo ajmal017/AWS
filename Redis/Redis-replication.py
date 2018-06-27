@@ -16,10 +16,12 @@ for key in src.keys("12562690"):
         print("Failed to restore key: %s" % key)
         pass
 
-# ALL Keys #######################################################################################################
-
+#################################################################################################################
+import os 
+os.system('Redis-Replication1.py "localhost:6379/4" "localhost:6379/6"')
 #python Redis-Replication1.py "localhost:6379/4" "localhost:6379/6"
 
+# ALL Keys #######################################################################################################
 import argparse
 import redis
 
