@@ -89,7 +89,7 @@ ohlc = df['LTP'].resample('1Min').ohlc()
 ohlc
 ##############################################################        
 
-data = r6.lrange(instrument_token,0,60)
+data = r6.lrange(instrument_token,0,-1)
 
 data = [s for s in data if not "None" in s]
 #data = [s for s in data if  " 15:27" in s]
