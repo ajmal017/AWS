@@ -1,459 +1,1186 @@
 ## Git
 [github-cheat-sheet](https://github.com/tiimgreen/github-cheat-sheet)
 
-giteveryday(7)
-==============
-
-NAME
-----
-giteveryday - A useful minimum set of commands for Everyday Git
-
-SYNOPSIS
---------
-
-Everyday Git With 20 Commands Or So
-
-DESCRIPTION
------------
-
-Git users can broadly be grouped into four categories for the purposes of
-describing here a small set of useful command for everyday Git.
-
-*	<<STANDALONE,Individual Developer (Standalone)>> commands are essential
-	for anybody who makes a commit, even for somebody who works alone.
-
-*	If you work with other people, you will need commands listed in
-	the <<PARTICIPANT,Individual Developer (Participant)>> section as well.
-
-*	People who play the <<INTEGRATOR,Integrator>> role need to learn some
-	more commands in addition to the above.
-
-*	<<ADMINISTRATION,Repository Administration>> commands are for system
-	administrators who are responsible for the care and feeding
-	of Git repositories.
-
-
-Individual Developer (Standalone)[[STANDALONE]]
------------------------------------------------
-
-A standalone individual developer does not exchange patches with
-other people, and works alone in a single repository, using the
-following commands.
-
-  * linkgit:git-init[1] to create a new repository.
-
-  * linkgit:git-log[1] to see what happened.
-
-  * linkgit:git-checkout[1] and linkgit:git-branch[1] to switch
-    branches.
-
-  * linkgit:git-add[1] to manage the index file.
-
-  * linkgit:git-diff[1] and linkgit:git-status[1] to see what
-    you are in the middle of doing.
-
-  * linkgit:git-commit[1] to advance the current branch.
-
-  * linkgit:git-reset[1] and linkgit:git-checkout[1] (with
-    pathname parameters) to undo changes.
-
-  * linkgit:git-merge[1] to merge between local branches.
-
-  * linkgit:git-rebase[1] to maintain topic branches.
-
-  * linkgit:git-tag[1] to mark a known point.
-
-Examples
-~~~~~~~~
-
-Use a tarball as a starting point for a new repository.::
-+
-------------
-$ tar zxf frotz.tar.gz
-$ cd frotz
-$ git init
-$ git add . <1>
-$ git commit -m "import of frotz source tree."
-$ git tag v2.43 <2>
-------------
-+
-<1> add everything under the current directory.
-<2> make a lightweight, unannotated tag.
-
-Create a topic branch and develop.::
-+
-------------
-$ git checkout -b alsa-audio <1>
-$ edit/compile/test
-$ git checkout -- curses/ux_audio_oss.c <2>
-$ git add curses/ux_audio_alsa.c <3>
-$ edit/compile/test
-$ git diff HEAD <4>
-$ git commit -a -s <5>
-$ edit/compile/test
-$ git diff HEAD^ <6>
-$ git commit -a --amend <7>
-$ git checkout master <8>
-$ git merge alsa-audio <9>
-$ git log --since='3 days ago' <10>
-$ git log v2.43.. curses/ <11>
-------------
-+
-<1> create a new topic branch.
-<2> revert your botched changes in `curses/ux_audio_oss.c`.
-<3> you need to tell Git if you added a new file; removal and
-modification will be caught if you do `git commit -a` later.
-<4> to see what changes you are committing.
-<5> commit everything, as you have tested, with your sign-off.
-<6> look at all your changes including the previous commit.
-<7> amend the previous commit, adding all your new changes,
-using your original message.
-<8> switch to the master branch.
-<9> merge a topic branch into your master branch.
-<10> review commit logs; other forms to limit output can be
-combined and include `-10` (to show up to 10 commits),
-`--until=2005-12-10`, etc.
-<11> view only the changes that touch what's in `curses/`
-directory, since `v2.43` tag.
-
-
-Individual Developer (Participant)[[PARTICIPANT]]
--------------------------------------------------
-
-A developer working as a participant in a group project needs to
-learn how to communicate with others, and uses these commands in
-addition to the ones needed by a standalone developer.
-
-  * linkgit:git-clone[1] from the upstream to prime your local
-    repository.
-
-  * linkgit:git-pull[1] and linkgit:git-fetch[1] from "origin"
-    to keep up-to-date with the upstream.
-
-  * linkgit:git-push[1] to shared repository, if you adopt CVS
-    style shared repository workflow.
-
-  * linkgit:git-format-patch[1] to prepare e-mail submission, if
-    you adopt Linux kernel-style public forum workflow.
-
-  * linkgit:git-send-email[1] to send your e-mail submission without
-    corruption by your MUA.
-
-  * linkgit:git-request-pull[1] to create a summary of changes
-    for your upstream to pull.
-
-
-Examples
-~~~~~~~~
-
-Clone the upstream and work on it.  Feed changes to upstream.::
-+
-------------
-$ git clone git://git.kernel.org/pub/scm/.../torvalds/linux-2.6 my2.6
-$ cd my2.6
-$ git checkout -b mine master <1>
-$ edit/compile/test; git commit -a -s <2>
-$ git format-patch master <3>
-$ git send-email --to="person <email@example.com>" 00*.patch <4>
-$ git checkout master <5>
-$ git pull <6>
-$ git log -p ORIG_HEAD.. arch/i386 include/asm-i386 <7>
-$ git ls-remote --heads http://git.kernel.org/.../jgarzik/libata-dev.git <8>
-$ git pull git://git.kernel.org/pub/.../jgarzik/libata-dev.git ALL <9>
-$ git reset --hard ORIG_HEAD <10>
-$ git gc <11>
-------------
-+
-<1> checkout a new branch `mine` from master.
-<2> repeat as needed.
-<3> extract patches from your branch, relative to master,
-<4> and email them.
-<5> return to `master`, ready to see what's new
-<6> `git pull` fetches from `origin` by default and merges into the
-current branch.
-<7> immediately after pulling, look at the changes done upstream
-since last time we checked, only in the
-area we are interested in.
-<8> check the branch names in an external repository (if not known).
-<9> fetch from a specific branch `ALL` from a specific repository
-and merge it.
-<10> revert the pull.
-<11> garbage collect leftover objects from reverted pull.
-
-
-Push into another repository.::
-+
-------------
-satellite$ git clone mothership:frotz frotz <1>
-satellite$ cd frotz
-satellite$ git config --get-regexp '^(remote|branch)\.' <2>
-remote.origin.url mothership:frotz
-remote.origin.fetch refs/heads/*:refs/remotes/origin/*
-branch.master.remote origin
-branch.master.merge refs/heads/master
-satellite$ git config remote.origin.push \
-	   +refs/heads/*:refs/remotes/satellite/* <3>
-satellite$ edit/compile/test/commit
-satellite$ git push origin <4>
-
-mothership$ cd frotz
-mothership$ git checkout master
-mothership$ git merge satellite/master <5>
-------------
-+
-<1> mothership machine has a frotz repository under your home
-directory; clone from it to start a repository on the satellite
-machine.
-<2> clone sets these configuration variables by default.
-It arranges `git pull` to fetch and store the branches of mothership
-machine to local `remotes/origin/*` remote-tracking branches.
-<3> arrange `git push` to push all local branches to
-their corresponding branch of the mothership machine.
-<4> push will stash all our work away on `remotes/satellite/*`
-remote-tracking branches on the mothership machine.  You could use this
-as a back-up method. Likewise, you can pretend that mothership
-"fetched" from you (useful when access is one sided).
-<5> on mothership machine, merge the work done on the satellite
-machine into the master branch.
-
-Branch off of a specific tag.::
-+
-------------
-$ git checkout -b private2.6.14 v2.6.14 <1>
-$ edit/compile/test; git commit -a
-$ git checkout master
-$ git cherry-pick v2.6.14..private2.6.14 <2>
-------------
-+
-<1> create a private branch based on a well known (but somewhat behind)
-tag.
-<2> forward port all changes in `private2.6.14` branch to `master` branch
-without a formal "merging". Or longhand +
-`git format-patch -k -m --stdout v2.6.14..private2.6.14 |
-  git am -3 -k`
-
-An alternate participant submission mechanism is using the
-`git request-pull` or pull-request mechanisms (e.g as used on
-GitHub (www.github.com) to notify your upstream of your
-contribution.
-
-Integrator[[INTEGRATOR]]
-------------------------
-
-A fairly central person acting as the integrator in a group
-project receives changes made by others, reviews and integrates
-them and publishes the result for others to use, using these
-commands in addition to the ones needed by participants.
-
-This section can also be used by those who respond to `git
-request-pull` or pull-request on GitHub (www.github.com) to
-integrate the work of others into their history. An sub-area
-lieutenant for a repository will act both as a participant and
-as an integrator.
-
-
-  * linkgit:git-am[1] to apply patches e-mailed in from your
-    contributors.
-
-  * linkgit:git-pull[1] to merge from your trusted lieutenants.
-
-  * linkgit:git-format-patch[1] to prepare and send suggested
-    alternative to contributors.
-
-  * linkgit:git-revert[1] to undo botched commits.
-
-  * linkgit:git-push[1] to publish the bleeding edge.
-
-
-Examples
-~~~~~~~~
-
-A typical integrator's Git day.::
-+
-------------
-$ git status <1>
-$ git branch --no-merged master <2>
-$ mailx <3>
-& s 2 3 4 5 ./+to-apply
-& s 7 8 ./+hold-linus
-& q
-$ git checkout -b topic/one master
-$ git am -3 -i -s ./+to-apply <4>
-$ compile/test
-$ git checkout -b hold/linus && git am -3 -i -s ./+hold-linus <5>
-$ git checkout topic/one && git rebase master <6>
-$ git checkout pu && git reset --hard next <7>
-$ git merge topic/one topic/two && git merge hold/linus <8>
-$ git checkout maint
-$ git cherry-pick master~4 <9>
-$ compile/test
-$ git tag -s -m "GIT 0.99.9x" v0.99.9x <10>
-$ git fetch ko && for branch in master maint next pu <11>
-    do
-	git show-branch ko/$branch $branch <12>
-    done
-$ git push --follow-tags ko <13>
-------------
-+
-<1> see what you were in the middle of doing, if anything.
-<2> see which branches haven't been merged into `master` yet.
-Likewise for any other integration branches e.g. `maint`, `next`
-and `pu` (potential updates).
-<3> read mails, save ones that are applicable, and save others
-that are not quite ready (other mail readers are available).
-<4> apply them, interactively, with your sign-offs.
-<5> create topic branch as needed and apply, again with sign-offs.
-<6> rebase internal topic branch that has not been merged to the
-master or exposed as a part of a stable branch.
-<7> restart `pu` every time from the next.
-<8> and bundle topic branches still cooking.
-<9> backport a critical fix.
-<10> create a signed tag.
-<11> make sure master was not accidentally rewound beyond that
-already pushed out.
-<12> In the output from `git show-branch`, `master` should have
-everything `ko/master` has, and `next` should have
-everything `ko/next` has, etc.
-<13> push out the bleeding edge, together with new tags that point
-into the pushed history.
-
-In this example, the `ko` shorthand points at the Git maintainer's
-repository at kernel.org, and looks like this:
-
-------------
-(in .git/config)
-[remote "ko"]
-	url = kernel.org:/pub/scm/git/git.git
-	fetch = refs/heads/*:refs/remotes/ko/*
-	push = refs/heads/master
-	push = refs/heads/next
-	push = +refs/heads/pu
-	push = refs/heads/maint
-------------
-
-
-Repository Administration[[ADMINISTRATION]]
--------------------------------------------
-
-A repository administrator uses the following tools to set up
-and maintain access to the repository by developers.
-
-  * linkgit:git-daemon[1] to allow anonymous download from
-    repository.
-
-  * linkgit:git-shell[1] can be used as a 'restricted login shell'
-    for shared central repository users.
-
-  * linkgit:git-http-backend[1] provides a server side implementation
-    of Git-over-HTTP ("Smart http") allowing both fetch and push services.
-
-  * linkgit:gitweb[1] provides a web front-end to Git repositories,
-    which can be set-up using the linkgit:git-instaweb[1] script.
-
-link:howto/update-hook-example.html[update hook howto] has a good
-example of managing a shared central repository.
-
-In addition there are a number of other widely deployed hosting, browsing
-and reviewing solutions such as:
-
-  * gitolite, gerrit code review, cgit and others.
-
-Examples
-~~~~~~~~
-We assume the following in /etc/services::
-+
-------------
-$ grep 9418 /etc/services
-git		9418/tcp		# Git Version Control System
-------------
-
-Run git-daemon to serve /pub/scm from inetd.::
-+
-------------
-$ grep git /etc/inetd.conf
-git	stream	tcp	nowait	nobody \
-  /usr/bin/git-daemon git-daemon --inetd --export-all /pub/scm
-------------
-+
-The actual configuration line should be on one line.
-
-Run git-daemon to serve /pub/scm from xinetd.::
-+
-------------
-$ cat /etc/xinetd.d/git-daemon
-# default: off
-# description: The Git server offers access to Git repositories
-service git
-{
-	disable = no
-	type            = UNLISTED
-	port            = 9418
-	socket_type     = stream
-	wait            = no
-	user            = nobody
-	server          = /usr/bin/git-daemon
-	server_args     = --inetd --export-all --base-path=/pub/scm
-	log_on_failure  += USERID
-}
-------------
-+
-Check your xinetd(8) documentation and setup, this is from a Fedora system.
-Others might be different.
-
-Give push/pull only access to developers using git-over-ssh.::
-
-e.g. those using:
-`$ git push/pull ssh://host.xz/pub/scm/project`
-+
-------------
-$ grep git /etc/passwd <1>
-alice:x:1000:1000::/home/alice:/usr/bin/git-shell
-bob:x:1001:1001::/home/bob:/usr/bin/git-shell
-cindy:x:1002:1002::/home/cindy:/usr/bin/git-shell
-david:x:1003:1003::/home/david:/usr/bin/git-shell
-$ grep git /etc/shells <2>
-/usr/bin/git-shell
-------------
-+
-<1> log-in shell is set to /usr/bin/git-shell, which does not
-allow anything but `git push` and `git pull`.  The users require
-ssh access to the machine.
-<2> in many distributions /etc/shells needs to list what is used
-as the login shell.
-
-CVS-style shared repository.::
-+
-------------
-$ grep git /etc/group <1>
-git:x:9418:alice,bob,cindy,david
-$ cd /home/devo.git
-$ ls -l <2>
-  lrwxrwxrwx   1 david git    17 Dec  4 22:40 HEAD -> refs/heads/master
-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 branches
-  -rw-rw-r--   1 david git    84 Dec  4 22:40 config
-  -rw-rw-r--   1 david git    58 Dec  4 22:40 description
-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 hooks
-  -rw-rw-r--   1 david git 37504 Dec  4 22:40 index
-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 info
-  drwxrwsr-x   4 david git  4096 Dec  4 22:40 objects
-  drwxrwsr-x   4 david git  4096 Nov  7 14:58 refs
-  drwxrwsr-x   2 david git  4096 Dec  4 22:40 remotes
-$ ls -l hooks/update <3>
-  -r-xr-xr-x   1 david git  3536 Dec  4 22:40 update
-$ cat info/allowed-users <4>
-refs/heads/master	alice\|cindy
-refs/heads/doc-update	bob
-refs/tags/v[0-9]*	david
-------------
-+
-<1> place the developers into the same git group.
-<2> and make the shared repository writable by the group.
-<3> use update-hook example by Carl from Documentation/howto/
-for branch policy control.
-<4> alice and cindy can push into master, only bob can push into doc-update.
-david is the release manager and is the only person who can
-create and push version tags.
-
-GIT
----
-Part of the linkgit:git[1] suite
+## git-tips
+> Collection of `git-tips`, want to add your tips? Checkout [contributing.md](./contributing.md)
+
+[English](http://git.io/git-tips) | [中文](https://github.com/521xueweihan/git-tips) | [Русский](https://github.com/Imangazaliev/git-tips) | [한국어](https://github.com/mingrammer/git-tips) | [Tiếng Việt](https://github.com/hprobotic/git-tips)
+
+### __Tools:__
+
+* [git-tip](https://www.npmjs.com/package/git-tip) - A handy CLI to make optimum use of these tips. ([Here in Docker container](https://github.com/djoudi5/docker-git-tip))
+
+P.S: All these commands are tested on `git version 2.7.4 (Apple Git-66)`.
+
+<!-- @doxie.inject start toc -->
+<!-- Don’t remove or change the comment above – that can break automatic updates. -->
+* [Everyday Git in twenty commands or so](#everyday-git-in-twenty-commands-or-so)
+* [Show helpful guides that come with Git](#show-helpful-guides-that-come-with-git)
+* [Search change by content](#search-change-by-content)
+* [Remove sensitive data from history, after a push](#remove-sensitive-data-from-history-after-a-push)
+* [Sync with remote, overwrite local changes](#sync-with-remote-overwrite-local-changes)
+* [List of all files till a commit](#list-of-all-files-till-a-commit)
+* [Git reset first commit](#git-reset-first-commit)
+* [List all the conflicted files](#list-all-the-conflicted-files)
+* [List of all files changed in a commit](#list-of-all-files-changed-in-a-commit)
+* [Unstaged changes since last commit](#unstaged-changes-since-last-commit)
+* [Changes staged for commit](#changes-staged-for-commit)
+* [Show both staged and unstaged changes](#show-both-staged-and-unstaged-changes)
+* [List all branches that are already merged into master](#list-all-branches-that-are-already-merged-into-master)
+* [Quickly switch to the previous branch](#quickly-switch-to-the-previous-branch)
+* [Remove branches that have already been merged with master](#remove-branches-that-have-already-been-merged-with-master)
+* [List all branches and their upstreams, as well as last commit on branch](#list-all-branches-and-their-upstreams-as-well-as-last-commit-on-branch)
+* [Track upstream branch](#track-upstream-branch)
+* [Delete local branch](#delete-local-branch)
+* [Delete remote branch](#delete-remote-branch)
+* [Delete local tag](#delete-local-tag)
+* [Delete remote tag](#delete-remote-tag)
+* [Undo local changes with the last content in head](#undo-local-changes-with-the-last-content-in-head)
+* [Revert: Undo a commit by creating a new commit](#revert-undo-a-commit-by-creating-a-new-commit)
+* [Reset: Discard commits, advised for private branch](#reset-discard-commits-advised-for-private-branch)
+* [Reword the previous commit message](#reword-the-previous-commit-message)
+* [See commit history for just the current branch](#see-commit-history-for-just-the-current-branch)
+* [Amend author.](#amend-author)
+* [Reset author, after author has been changed in the global config.](#reset-author-after-author-has-been-changed-in-the-global-config)
+* [Changing a remote's URL](#changing-a-remotes-url)
+* [Get list of all remote references](#get-list-of-all-remote-references)
+* [Get list of all local and remote branches](#get-list-of-all-local-and-remote-branches)
+* [Get only remote branches](#get-only-remote-branches)
+* [Stage parts of a changed file, instead of the entire file](#stage-parts-of-a-changed-file-instead-of-the-entire-file)
+* [Get git bash completion](#get-git-bash-completion)
+* [What changed since two weeks?](#what-changed-since-two-weeks)
+* [See all commits made since forking from master](#see-all-commits-made-since-forking-from-master)
+* [Pick commits across branches using cherry-pick](#pick-commits-across-branches-using-cherry-pick)
+* [Find out branches containing commit-hash](#find-out-branches-containing-commit-hash)
+* [Git Aliases](#git-aliases)
+* [Saving current state of tracked files without commiting](#saving-current-state-of-tracked-files-without-commiting)
+* [Saving current state of unstaged changes to tracked files](#saving-current-state-of-unstaged-changes-to-tracked-files)
+* [Saving current state including untracked files](#saving-current-state-including-untracked-files)
+* [Saving current state with message](#saving-current-state-with-message)
+* [Saving current state of all files (ignored, untracked, and tracked)](#saving-current-state-of-all-files-ignored-untracked-and-tracked)
+* [Show list of all saved stashes](#show-list-of-all-saved-stashes)
+* [Apply any stash without deleting from the stashed list](#apply-any-stash-without-deleting-from-the-stashed-list)
+* [Apply last stashed state and delete it from stashed list](#apply-last-stashed-state-and-delete-it-from-stashed-list)
+* [Delete all stored stashes](#delete-all-stored-stashes)
+* [Grab a single file from a stash](#grab-a-single-file-from-a-stash)
+* [Show all tracked files](#show-all-tracked-files)
+* [Show all untracked files](#show-all-untracked-files)
+* [Show all ignored files](#show-all-ignored-files)
+* [Create new working tree from a repository (git 2.5)](#create-new-working-tree-from-a-repository-git-25)
+* [Create new working tree from HEAD state](#create-new-working-tree-from-head-state)
+* [Untrack files without deleting](#untrack-files-without-deleting)
+* [Before deleting untracked files/directory, do a dry run to get the list of these files/directories](#before-deleting-untracked-filesdirectory-do-a-dry-run-to-get-the-list-of-these-filesdirectories)
+* [Forcefully remove untracked files](#forcefully-remove-untracked-files)
+* [Forcefully remove untracked directory](#forcefully-remove-untracked-directory)
+* [Update all the submodules](#update-all-the-submodules)
+* [Show all commits in the current branch yet to be merged to master](#show-all-commits-in-the-current-branch-yet-to-be-merged-to-master)
+* [Rename a branch](#rename-a-branch)
+* [Rebases 'feature' to 'master' and merges it in to master ](#rebases-feature-to-master-and-merges-it-in-to-master)
+* [Archive the `master` branch](#archive-the-master-branch)
+* [Modify previous commit without modifying the commit message](#modify-previous-commit-without-modifying-the-commit-message)
+* [Prunes references to remote branches that have been deleted in the remote.](#prunes-references-to-remote-branches-that-have-been-deleted-in-the-remote)
+* [Retrieve the commit hash of the initial revision.](#retrieve-the-commit-hash-of-the-initial-revision)
+* [Visualize the version tree.](#visualize-the-version-tree)
+* [Deploying git tracked subfolder to gh-pages](#deploying-git-tracked-subfolder-to-gh-pages)
+* [Adding a project to repo using subtree](#adding-a-project-to-repo-using-subtree)
+* [Get latest changes in your repo for a linked project using subtree](#get-latest-changes-in-your-repo-for-a-linked-project-using-subtree)
+* [Export a branch with history to a file.](#export-a-branch-with-history-to-a-file)
+* [Import from a bundle](#import-from-a-bundle)
+* [Get the name of current branch.](#get-the-name-of-current-branch)
+* [Ignore one file on commit (e.g. Changelog).](#ignore-one-file-on-commit-eg-changelog)
+* [Stash changes before rebasing](#stash-changes-before-rebasing)
+* [Fetch pull request by ID to a local branch](#fetch-pull-request-by-id-to-a-local-branch)
+* [Show the most recent tag on the current branch.](#show-the-most-recent-tag-on-the-current-branch)
+* [Show inline word diff.](#show-inline-word-diff)
+* [Show changes using common diff tools.](#show-changes-using-common-diff-tools)
+* [Don’t consider changes for tracked file.](#dont-consider-changes-for-tracked-file)
+* [Undo assume-unchanged.](#undo-assume-unchanged)
+* [Clean the files from `.gitignore`.](#clean-the-files-from-gitignore)
+* [Restore deleted file.](#restore-deleted-file)
+* [Restore file to a specific commit-hash](#restore-file-to-a-specific-commit-hash)
+* [Always rebase instead of merge on pull.](#always-rebase-instead-of-merge-on-pull)
+* [List all the alias and configs.](#list-all-the-alias-and-configs)
+* [Make git case sensitive.](#make-git-case-sensitive)
+* [Add custom editors.](#add-custom-editors)
+* [Auto correct typos.](#auto-correct-typos)
+* [Check if the change was a part of a release.](#check-if-the-change-was-a-part-of-a-release)
+* [Dry run. (any command that supports dry-run flag should do.)](#dry-run-any-command-that-supports-dry-run-flag-should-do)
+* [Marks your commit as a fix of a previous commit.](#marks-your-commit-as-a-fix-of-a-previous-commit)
+* [Squash fixup commits normal commits.](#squash-fixup-commits-normal-commits)
+* [Skip staging area during commit.](#skip-staging-area-during-commit)
+* [Interactive staging.](#interactive-staging)
+* [List ignored files.](#list-ignored-files)
+* [Status of ignored files.](#status-of-ignored-files)
+* [Commits in Branch1 that are not in Branch2](#commits-in-branch1-that-are-not-in-branch2)
+* [List n last commits](#list-n-last-commits)
+* [Reuse recorded resolution, record and reuse previous conflicts resolutions.](#reuse-recorded-resolution-record-and-reuse-previous-conflicts-resolutions)
+* [Open all conflicted files in an editor.](#open-all-conflicted-files-in-an-editor)
+* [Count unpacked number of objects and their disk consumption.](#count-unpacked-number-of-objects-and-their-disk-consumption)
+* [Prune all unreachable objects from the object database.](#prune-all-unreachable-objects-from-the-object-database)
+* [Instantly browse your working repository in gitweb.](#instantly-browse-your-working-repository-in-gitweb)
+* [View the GPG signatures in the commit log](#view-the-gpg-signatures-in-the-commit-log)
+* [Remove entry in the global config.](#remove-entry-in-the-global-config)
+* [Checkout a new branch without any history](#checkout-a-new-branch-without-any-history)
+* [Extract file from another branch.](#extract-file-from-another-branch)
+* [List only the root and merge commits.](#list-only-the-root-and-merge-commits)
+* [Change previous two commits with an interactive rebase.](#change-previous-two-commits-with-an-interactive-rebase)
+* [List all branch is WIP](#list-all-branch-is-wip)
+* [Find guilty with binary search](#find-guilty-with-binary-search)
+* [Bypass pre-commit and commit-msg githooks](#bypass-pre-commit-and-commit-msg-githooks)
+* [List commits and changes to a specific file (even through renaming)](#list-commits-and-changes-to-a-specific-file-even-through-renaming)
+* [Clone a single branch](#clone-a-single-branch)
+* [Create and switch new branch](#create-and-switch-new-branch)
+* [Ignore file mode changes on commits](#ignore-file-mode-changes-on-commits)
+* [Turn off git colored terminal output](#turn-off-git-colored-terminal-output)
+* [Specific color settings](#specific-color-settings)
+* [Show all local branches ordered by recent commits](#show-all-local-branches-ordered-by-recent-commits)
+* [Find lines matching the pattern (regex or string) in tracked files](#find-lines-matching-the-pattern-regex-or-string-in-tracked-files)
+* [Clone a shallow copy of a repository](#clone-a-shallow-copy-of-a-repository)
+* [Search Commit log across all branches for given text](#search-commit-log-across-all-branches-for-given-text)
+* [Get first commit in a branch (from master)](#get-first-commit-in-a-branch-from-master)
+* [Unstaging Staged file](#unstaging-staged-file)
+* [Force push to Remote Repository](#force-push-to-remote-repository)
+* [Adding Remote name](#adding-remote-name)
+* [Show the author, time and last revision made to each line of a given file](#show-the-author-time-and-last-revision-made-to-each-line-of-a-given-file)
+* [Group commits by authors and title](#group-commits-by-authors-and-title)
+* [Forced push but still ensure you don't overwrite other's work](#forced-push-but-still-ensure-you-dont-overwrite-others-work)
+* [Show how many lines does an author contribute](#show-how-many-lines-does-an-author-contribute)
+* [Revert: Reverting an entire merge](#revert-reverting-an-entire-merge)
+* [Number of commits in a branch](#number-of-commits-in-a-branch)
+* [Alias: git undo](#alias-git-undo)
+* [Add object notes](#add-object-notes)
+* [Show all the git-notes](#show-all-the-git-notes)
+* [Apply commit from another repository](#apply-commit-from-another-repository)
+* [Specific fetch reference](#specific-fetch-reference)
+* [Find common ancestor of two branches](#find-common-ancestor-of-two-branches)
+* [List unpushed git commits](#list-unpushed-git-commits)
+* [Add everything, but whitespace changes](#add-everything-but-whitespace-changes)
+* [Edit [local/global] git config](#edit-localglobal-git-config)
+* [blame on certain range](#blame-on-certain-range)
+* [Show a Git logical variable.](#show-a-git-logical-variable)
+* [Preformatted patch file.](#preformatted-patch-file)
+* [Get the repo name.](#get-the-repo-name)
+* [logs between date range](#logs-between-date-range)
+* [Exclude author from logs](#exclude-author-from-logs)
+* [Generates a summary of pending changes](#generates-a-summary-of-pending-changes)
+* [List references in a remote repository](#list-references-in-a-remote-repository)
+* [Backup untracked files.](#backup-untracked-files)
+* [List all git aliases](#list-all-git-aliases)
+* [Show git status short](#show-git-status-short)
+* [Checkout a commit prior to a day ago](#checkout-a-commit-prior-to-a-day-ago)
+* [Push a new local branch to remote repository and track](#push-a-new-local-branch-to-remote-repository-and-track)
+* [Change a branch base](#change-a-branch-base)
+
+<!-- Don’t remove or change the comment below – that can break automatic updates. More info at <http://npm.im/doxie.inject>. -->
+<!-- @doxie.inject end toc -->
+
+
+<!-- @doxie.inject start -->
+<!-- Don’t remove or change the comment above – that can break automatic updates. -->
+## Everyday Git in twenty commands or so
+```sh
+git help everyday
+```
+
+## Show helpful guides that come with Git
+```sh
+git help -g
+```
+
+## Search change by content
+```sh
+git log -S'<a term in the source>'
+```
+
+## Remove sensitive data from history, after a push
+```sh
+git filter-branch --force --index-filter 'git rm --cached --ignore-unmatch <path-to-your-file>' --prune-empty --tag-name-filter cat -- --all && git push origin --force --all
+```
+
+## Sync with remote, overwrite local changes
+```sh
+git fetch origin && git reset --hard origin/master && git clean -f -d
+```
+
+## List of all files till a commit
+```sh
+git ls-tree --name-only -r <commit-ish>
+```
+
+## Git reset first commit
+```sh
+git update-ref -d HEAD
+```
+
+## List all the conflicted files
+```sh
+git diff --name-only --diff-filter=U
+```
+
+## List of all files changed in a commit
+```sh
+git diff-tree --no-commit-id --name-only -r <commit-ish>
+```
+
+## Unstaged changes since last commit
+```sh
+git diff
+```
+
+## Changes staged for commit
+```sh
+git diff --cached
+```
+
+
+__Alternatives:__
+```sh
+git diff --staged
+```
+
+## Show both staged and unstaged changes
+```sh
+git diff HEAD
+```
+
+## List all branches that are already merged into master
+```sh
+git branch --merged master
+```
+
+## Quickly switch to the previous branch
+```sh
+git checkout -
+```
+
+
+__Alternatives:__
+```sh
+git checkout @{-1}
+```
+
+## Remove branches that have already been merged with master
+```sh
+git branch --merged master | grep -v '^\*' | xargs -n 1 git branch -d
+```
+
+
+__Alternatives:__
+```sh
+git branch --merged master | grep -v '^\*\|  master' | xargs -n 1 git branch -d # will not delete master if master is not checked out
+```
+
+## List all branches and their upstreams, as well as last commit on branch
+```sh
+git branch -vv
+```
+
+## Track upstream branch
+```sh
+git branch -u origin/mybranch
+```
+
+## Delete local branch
+```sh
+git branch -d <local_branchname>
+```
+
+## Delete remote branch
+```sh
+git push origin --delete <remote_branchname>
+```
+
+
+__Alternatives:__
+```sh
+git push origin :<remote_branchname>
+```
+
+## Delete local tag
+```sh
+git tag -d <tag-name>
+```
+
+## Delete remote tag
+```sh
+git push origin :refs/tags/<tag-name>
+```
+
+## Undo local changes with the last content in head
+```sh
+git checkout -- <file_name>
+```
+
+## Revert: Undo a commit by creating a new commit
+```sh
+git revert <commit-ish>
+```
+
+## Reset: Discard commits, advised for private branch
+```sh
+git reset <commit-ish>
+```
+
+## Reword the previous commit message
+```sh
+git commit -v --amend
+```
+
+## See commit history for just the current branch
+```sh
+git cherry -v master
+```
+
+## Amend author.
+```sh
+git commit --amend --author='Author Name <email@address.com>'
+```
+
+## Reset author, after author has been changed in the global config.
+```sh
+git commit --amend --reset-author --no-edit
+```
+
+## Changing a remote's URL
+```sh
+git remote set-url origin <URL>
+```
+
+## Get list of all remote references
+```sh
+git remote
+```
+
+
+__Alternatives:__
+```sh
+git remote show
+```
+
+## Get list of all local and remote branches
+```sh
+git branch -a
+```
+
+## Get only remote branches
+```sh
+git branch -r
+```
+
+## Stage parts of a changed file, instead of the entire file
+```sh
+git add -p
+```
+
+## Get git bash completion
+```sh
+curl http://git.io/vfhol > ~/.git-completion.bash && echo '[ -f ~/.git-completion.bash ] && . ~/.git-completion.bash' >> ~/.bashrc
+```
+
+## What changed since two weeks?
+```sh
+git log --no-merges --raw --since='2 weeks ago'
+```
+
+
+__Alternatives:__
+```sh
+git whatchanged --since='2 weeks ago'
+```
+
+## See all commits made since forking from master
+```sh
+git log --no-merges --stat --reverse master..
+```
+
+## Pick commits across branches using cherry-pick
+```sh
+git checkout <branch-name> && git cherry-pick <commit-ish>
+```
+
+## Find out branches containing commit-hash
+```sh
+git branch -a --contains <commit-ish>
+```
+
+
+__Alternatives:__
+```sh
+git branch --contains <commit-ish>
+```
+
+## Git Aliases
+```sh
+git config --global alias.<handle> <command> 
+git config --global alias.st status
+```
+
+## Saving current state of tracked files without commiting
+```sh
+git stash
+```
+
+
+__Alternatives:__
+```sh
+git stash save
+```
+
+## Saving current state of unstaged changes to tracked files
+```sh
+git stash -k
+```
+
+
+__Alternatives:__
+```sh
+git stash --keep-index
+```
+
+
+```sh
+git stash save --keep-index
+```
+
+## Saving current state including untracked files
+```sh
+git stash -u
+```
+
+
+__Alternatives:__
+```sh
+git stash save -u
+```
+
+
+```sh
+git stash save --include-untracked
+```
+
+## Saving current state with message
+```sh
+git stash save <message>
+```
+
+## Saving current state of all files (ignored, untracked, and tracked)
+```sh
+git stash -a
+```
+
+
+__Alternatives:__
+```sh
+git stash --all
+```
+
+
+```sh
+git stash save --all
+```
+
+## Show list of all saved stashes
+```sh
+git stash list
+```
+
+## Apply any stash without deleting from the stashed list
+```sh
+git stash apply <stash@{n}>
+```
+
+## Apply last stashed state and delete it from stashed list
+```sh
+git stash pop
+```
+
+
+__Alternatives:__
+```sh
+git stash apply stash@{0} && git stash drop stash@{0}
+```
+
+## Delete all stored stashes
+```sh
+git stash clear
+```
+
+
+__Alternatives:__
+```sh
+git stash drop <stash@{n}>
+```
+
+## Grab a single file from a stash
+```sh
+git checkout <stash@{n}> -- <file_path>
+```
+
+
+__Alternatives:__
+```sh
+git checkout stash@{0} -- <file_path>
+```
+
+## Show all tracked files
+```sh
+git ls-files -t
+```
+
+## Show all untracked files
+```sh
+git ls-files --others
+```
+
+## Show all ignored files
+```sh
+git ls-files --others -i --exclude-standard
+```
+
+## Create new working tree from a repository (git 2.5)
+```sh
+git worktree add -b <branch-name> <path> <start-point>
+```
+
+## Create new working tree from HEAD state
+```sh
+git worktree add --detach <path> HEAD
+```
+
+## Untrack files without deleting
+```sh
+git rm --cached <file_path>
+```
+
+
+__Alternatives:__
+```sh
+git rm --cached -r <directory_path>
+```
+
+## Before deleting untracked files/directory, do a dry run to get the list of these files/directories
+```sh
+git clean -n
+```
+
+## Forcefully remove untracked files
+```sh
+git clean -f
+```
+
+## Forcefully remove untracked directory
+```sh
+git clean -f -d
+```
+
+## Update all the submodules
+```sh
+git submodule foreach git pull
+```
+
+
+__Alternatives:__
+```sh
+git submodule update --init --recursive
+```
+
+
+```sh
+git submodule update --remote
+```
+
+## Show all commits in the current branch yet to be merged to master
+```sh
+git cherry -v master
+```
+
+
+__Alternatives:__
+```sh
+git cherry -v master <branch-to-be-merged>
+```
+
+## Rename a branch
+```sh
+git branch -m <new-branch-name>
+```
+
+
+__Alternatives:__
+```sh
+git branch -m [<old-branch-name>] <new-branch-name>
+```
+
+## Rebases 'feature' to 'master' and merges it in to master 
+```sh
+git rebase master feature && git checkout master && git merge -
+```
+
+## Archive the `master` branch
+```sh
+git archive master --format=zip --output=master.zip
+```
+
+## Modify previous commit without modifying the commit message
+```sh
+git add --all && git commit --amend --no-edit
+```
+
+## Prunes references to remote branches that have been deleted in the remote.
+```sh
+git fetch -p
+```
+
+
+__Alternatives:__
+```sh
+git remote prune origin
+```
+
+## Retrieve the commit hash of the initial revision.
+```sh
+ git rev-list --reverse HEAD | head -1
+```
+
+
+__Alternatives:__
+```sh
+git rev-list --max-parents=0 HEAD
+```
+
+
+```sh
+git log --pretty=oneline | tail -1 | cut -c 1-40
+```
+
+
+```sh
+git log --pretty=oneline --reverse | head -1 | cut -c 1-40
+```
+
+## Visualize the version tree.
+```sh
+git log --pretty=oneline --graph --decorate --all
+```
+
+
+__Alternatives:__
+```sh
+gitk --all
+```
+
+
+```sh
+git log --graph --pretty=format:'%C(auto) %h | %s | %an | %ar%d'
+```
+
+## Deploying git tracked subfolder to gh-pages
+```sh
+git subtree push --prefix subfolder_name origin gh-pages
+```
+
+## Adding a project to repo using subtree
+```sh
+git subtree add --prefix=<directory_name>/<project_name> --squash git@github.com:<username>/<project_name>.git master
+```
+
+## Get latest changes in your repo for a linked project using subtree
+```sh
+git subtree pull --prefix=<directory_name>/<project_name> --squash git@github.com:<username>/<project_name>.git master
+```
+
+## Export a branch with history to a file.
+```sh
+git bundle create <file> <branch-name>
+```
+
+## Import from a bundle
+```sh
+git clone repo.bundle <repo-dir> -b <branch-name>
+```
+
+## Get the name of current branch.
+```sh
+git rev-parse --abbrev-ref HEAD
+```
+
+## Ignore one file on commit (e.g. Changelog).
+```sh
+git update-index --assume-unchanged Changelog; git commit -a; git update-index --no-assume-unchanged Changelog
+```
+
+## Stash changes before rebasing
+```sh
+git rebase --autostash
+```
+
+## Fetch pull request by ID to a local branch
+```sh
+git fetch origin pull/<id>/head:<branch-name>
+```
+
+
+__Alternatives:__
+```sh
+git pull origin pull/<id>/head:<branch-name>
+```
+
+## Show the most recent tag on the current branch.
+```sh
+git describe --tags --abbrev=0
+```
+
+## Show inline word diff.
+```sh
+git diff --word-diff
+```
+
+## Show changes using common diff tools.
+```sh
+git difftool [-t <tool>] <commit1> <commit2> <path>
+```
+
+## Don’t consider changes for tracked file.
+```sh
+git update-index --assume-unchanged <file_name>
+```
+
+## Undo assume-unchanged.
+```sh
+git update-index --no-assume-unchanged <file_name>
+```
+
+## Clean the files from `.gitignore`.
+```sh
+git clean -X -f
+```
+
+## Restore deleted file.
+```sh
+git checkout <deleting_commit>^ -- <file_path>
+```
+
+## Restore file to a specific commit-hash
+```sh
+git checkout <commit-ish> -- <file_path>
+```
+
+## Always rebase instead of merge on pull.
+```sh
+git config --global pull.rebase true
+```
+
+
+__Alternatives:__
+```sh
+#git < 1.7.9
+git config --global branch.autosetuprebase always
+```
+
+## List all the alias and configs.
+```sh
+git config --list
+```
+
+## Make git case sensitive.
+```sh
+git config --global core.ignorecase false
+```
+
+## Add custom editors.
+```sh
+git config --global core.editor '$EDITOR'
+```
+
+## Auto correct typos.
+```sh
+git config --global help.autocorrect 1
+```
+
+## Check if the change was a part of a release.
+```sh
+git name-rev --name-only <SHA-1>
+```
+
+## Dry run. (any command that supports dry-run flag should do.)
+```sh
+git clean -fd --dry-run
+```
+
+## Marks your commit as a fix of a previous commit.
+```sh
+git commit --fixup <SHA-1>
+```
+
+## Squash fixup commits normal commits.
+```sh
+git rebase -i --autosquash
+```
+
+## Skip staging area during commit.
+```sh
+git commit --only <file_path>
+```
+
+## Interactive staging.
+```sh
+git add -i
+```
+
+## List ignored files.
+```sh
+git check-ignore *
+```
+
+## Status of ignored files.
+```sh
+git status --ignored
+```
+
+## Commits in Branch1 that are not in Branch2
+```sh
+git log Branch1 ^Branch2
+```
+
+## List n last commits
+```sh
+git log -<n>
+```
+
+
+__Alternatives:__
+```sh
+git log -n <n>
+```
+
+## Reuse recorded resolution, record and reuse previous conflicts resolutions.
+```sh
+git config --global rerere.enabled 1
+```
+
+## Open all conflicted files in an editor.
+```sh
+git diff --name-only | uniq | xargs $EDITOR
+```
+
+## Count unpacked number of objects and their disk consumption.
+```sh
+git count-objects --human-readable
+```
+
+## Prune all unreachable objects from the object database.
+```sh
+git gc --prune=now --aggressive
+```
+
+## Instantly browse your working repository in gitweb.
+```sh
+git instaweb [--local] [--httpd=<httpd>] [--port=<port>] [--browser=<browser>]
+```
+
+## View the GPG signatures in the commit log
+```sh
+git log --show-signature
+```
+
+## Remove entry in the global config.
+```sh
+git config --global --unset <entry-name>
+```
+
+## Checkout a new branch without any history
+```sh
+git checkout --orphan <branch_name>
+```
+
+## Extract file from another branch.
+```sh
+git show <branch_name>:<file_name>
+```
+
+## List only the root and merge commits.
+```sh
+git log --first-parent
+```
+
+## Change previous two commits with an interactive rebase.
+```sh
+git rebase --interactive HEAD~2
+```
+
+## List all branch is WIP
+```sh
+git checkout master && git branch --no-merged
+```
+
+## Find guilty with binary search
+```sh
+git bisect start                    # Search start 
+git bisect bad                      # Set point to bad commit 
+git bisect good v2.6.13-rc2         # Set point to good commit|tag 
+git bisect bad                      # Say current state is bad 
+git bisect good                     # Say current state is good 
+git bisect reset                    # Finish search 
+
+```
+
+## Bypass pre-commit and commit-msg githooks
+```sh
+git commit --no-verify
+```
+
+## List commits and changes to a specific file (even through renaming)
+```sh
+git log --follow -p -- <file_path>
+```
+
+## Clone a single branch
+```sh
+git clone -b <branch-name> --single-branch https://github.com/user/repo.git
+```
+
+## Create and switch new branch
+```sh
+git checkout -b <branch-name>
+```
+
+
+__Alternatives:__
+```sh
+git branch <branch-name> && git checkout <branch-name>
+```
+
+## Ignore file mode changes on commits
+```sh
+git config core.fileMode false
+```
+
+## Turn off git colored terminal output
+```sh
+git config --global color.ui false
+```
+
+## Specific color settings
+```sh
+git config --global <specific command e.g branch, diff> <true, false or always>
+```
+
+## Show all local branches ordered by recent commits
+```sh
+git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/
+```
+
+## Find lines matching the pattern (regex or string) in tracked files
+```sh
+git grep --heading --line-number 'foo bar'
+```
+
+## Clone a shallow copy of a repository
+```sh
+git clone https://github.com/user/repo.git --depth 1
+```
+
+## Search Commit log across all branches for given text
+```sh
+git log --all --grep='<given-text>'
+```
+
+## Get first commit in a branch (from master)
+```sh
+git log --oneline master..<branch-name> | tail -1
+```
+
+
+__Alternatives:__
+```sh
+git log --reverse master..<branch-name> | head -6
+```
+
+## Unstaging Staged file
+```sh
+git reset HEAD <file-name>
+```
+
+## Force push to Remote Repository
+```sh
+git push -f <remote-name> <branch-name>
+```
+
+## Adding Remote name
+```sh
+git remote add <remote-nickname> <remote-url>
+```
+
+## Show the author, time and last revision made to each line of a given file
+```sh
+git blame <file-name>
+```
+
+## Group commits by authors and title
+```sh
+git shortlog
+```
+
+## Forced push but still ensure you don't overwrite other's work
+```sh
+git push --force-with-lease <remote-name> <branch-name>
+```
+
+## Show how many lines does an author contribute
+```sh
+git log --author='_Your_Name_Here_' --pretty=tformat: --numstat | gawk '{ add += <!-- @doxie.inject start -->; subs += <!-- @doxie.inject end -->; loc += <!-- @doxie.inject start --> - <!-- @doxie.inject end --> } END { printf "added lines: %s removed lines: %s total lines: %s
+", add, subs, loc }' -
+```
+
+
+__Alternatives:__
+```sh
+git log --author='_Your_Name_Here_' --pretty=tformat: --numstat | awk '{ add += <!-- @doxie.inject start -->; subs += <!-- @doxie.inject end -->; loc += <!-- @doxie.inject start --> - <!-- @doxie.inject end --> } END { printf "added lines: %s, removed lines: %s, total lines: %s
+", add, subs, loc }' - # on Mac OSX
+```
+
+## Revert: Reverting an entire merge
+```sh
+git revert -m 1 <commit-ish>
+```
+
+## Number of commits in a branch
+```sh
+git rev-list --count <branch-name>
+```
+
+## Alias: git undo
+```sh
+git config --global alias.undo '!f() { git reset --hard $(git rev-parse --abbrev-ref HEAD)@{${1-1}}; }; f'
+```
+
+## Add object notes
+```sh
+git notes add -m 'Note on the previous commit....'
+```
+
+## Show all the git-notes
+```sh
+git log --show-notes='*'
+```
+
+## Apply commit from another repository
+```sh
+git --git-dir=<source-dir>/.git format-patch -k -1 --stdout <SHA1> | git am -3 -k
+```
+
+## Specific fetch reference
+```sh
+git fetch origin master:refs/remotes/origin/mymaster
+```
+
+## Find common ancestor of two branches
+```sh
+diff -u <(git rev-list --first-parent BranchA) <(git rev-list --first-parent BranchB) | sed -ne 's/^ //p' | head -1
+```
+
+## List unpushed git commits
+```sh
+git log --branches --not --remotes
+```
+
+
+__Alternatives:__
+```sh
+git log @{u}..
+```
+
+
+```sh
+git cherry -v
+```
+
+## Add everything, but whitespace changes
+```sh
+git diff --ignore-all-space | git apply --cached
+```
+
+## Edit [local/global] git config
+```sh
+git config [--global] --edit
+```
+
+## blame on certain range
+```sh
+git blame -L <start>,<end>
+```
+
+## Show a Git logical variable.
+```sh
+git var -l | <variable>
+```
+
+## Preformatted patch file.
+```sh
+git format-patch -M upstream..topic
+```
+
+## Get the repo name.
+```sh
+git rev-parse --show-toplevel
+```
+
+## logs between date range
+```sh
+git log --since='FEB 1 2017' --until='FEB 14 2017'
+```
+
+## Exclude author from logs
+```sh
+git log --perl-regexp --author='^((?!excluded-author-regex).*)
+
+```
+
+## Generates a summary of pending changes
+```sh
+git request-pull v1.0 https://git.ko.xz/project master:for-linus
+```
+
+## List references in a remote repository
+```sh
+git ls-remote git://git.kernel.org/pub/scm/git/git.git
+```
+
+## Backup untracked files.
+```sh
+git ls-files --others -i --exclude-standard | xargs zip untracked.zip
+```
+
+## List all git aliases
+```sh
+git config -l | grep alias | sed 's/^alias\.//g'
+```
+
+
+__Alternatives:__
+```sh
+git config -l | grep alias | cut -d '.' -f 2
+```
+
+## Show git status short
+```sh
+git status --short --branch
+```
+
+## Checkout a commit prior to a day ago
+```sh
+git checkout master@{yesterday}
+```
+
+## Push a new local branch to remote repository and track
+```sh
+git push -u origin <branch_name>
+```
+
+## Change a branch base
+```sh
+git rebase --onto <new_base> <old_base>
+```
+
+<!-- Don’t remove or change the comment below – that can break automatic updates. More info at <http://npm.im/doxie.inject>. -->
+<!-- @doxie.inject end -->
