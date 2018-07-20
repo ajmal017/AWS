@@ -4,8 +4,8 @@
 
 ```
 # Setting Global Username/Email
-git config --global user.name "Aayush Tuladhar"'
-git config --global user.email "aayush.tuladhar@gmail.com"'
+git config --global user.name "FirstName LastName"'
+git config --global user.email "email@gmail.com"'
 
 # Clone a Repo from URL
 git clone <url>
