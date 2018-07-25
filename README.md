@@ -25,6 +25,7 @@
 > [MD File Editor](https://stackedit.io)
 
 ---
+[IAM](https://drive.google.com/file/d/1-u25Y-0zQZqElqZ5ZiNI2in-7Bz2INx5/view)
 
 What is Cloud Computing?   
 Cloud computing is the on-demand delivery of compute power, database storage, applications, and other IT resources through a cloud services platform via the internet with pay-as-you-go pricing.
