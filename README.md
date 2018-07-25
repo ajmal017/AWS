@@ -244,7 +244,7 @@ Comments
 
 VPCs per region:
 
->**5**
+  * 5
 
 The limit for Internet gateways per region is directly correlated to this one. Increasing this limit will increase the limit on Internet gateways per region by the same amount.
 
