@@ -4,6 +4,8 @@
 
 >[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
+>[Udemy - CloudGuru - Test](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
+
 >[Linux Academy - Orion ](http://bit.ly/2nB2gRi)
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
@@ -242,127 +244,127 @@ Comments
 
 VPCs per region:
 
-5
+>5
 
 The limit for Internet gateways per region is directly correlated to this one. Increasing this limit will increase the limit on Internet gateways per region by the same amount.
 
 Subnets per VPC:
 
-200
+>200
 
 Internet gateways per region:
 
-5
+>5
 
 This limit is directly correlated with the limit on VPCs per region. You cannot increase this limit individually; the only way to increase this limit is to increase the limit on VPCs per region. Only one Internet gateway can be attached to a VPC at a time.
 
 Customer gateways per region:
 
-50
+>50
 
 VPN connections per region:
 
-50
+>50
 
 VPN connections per VPC (per virtual private gateway):
 
-10
+>10
 
 Route tables per VPC:
 
-5
+>5
 
 Including the main route table. You can associate one route table to one or more subnets in a VPC.
 
 Routes per route table (non-propagated routes):
 
-50
+>50
 
 This is the limit for the number of non-propagated entries per route table. You can submit a request for an increase of up to a maximum of 100; however, network performance may be impacted.
 
 BGP advertised routes per route table (propagated routes):
 
-5
+>5
 
 You can have up to 100 propagated routes per route table; however, the total number of propagated and non-propagated entries per route table cannot exceed 100. For example, if you have 50 non-propagated entries (the default limit for this type of entry), you can only have 50 propagated entries. This limit cannot be increased. If you require more than 100 prefixes, advertise a default route.
 
 Elastic IP addresses per region for each AWS account:
 
-5
+>5
 
 This is the limit for the number of VPC Elastic IP addresses you can allocate within a region. This is a separate limit from the Amazon EC2 Elastic IP address limit.
 
 Security groups per VPC:
 
-500
+>500
 
 Inbound or outbound rules per security group:
 
-50
+>50
 
 You can have 50 inbound and 50 outbound rules per security group (giving a total of 100 combined inbound and outbound rules). If you need to increase or decrease this limit, you can contact AWS Support — a limit change applies to both inbound and outbound rules. However, the multiple of the limit for inbound or outbound rules per security group and the limit for security groups per network interface cannot exceed 250. For example, if you want to increase the limit to 100, we decrease your number of security groups per network interface to 2.
 
 Security groups per network interface:
 
-5
+>5
 
 If you need to increase or decrease this limit, you can contact AWS Support. The maximum is 16. The multiple of the limit for security groups per network interface and the limit for rules per security group cannot exceed 250. For example, if you want 10 security groups per network interface, we decrease your number of rules per security group to 25.
 
 Network interfaces per instance:
 
-N/A
+>N/A
 
 This limit varies by instance type. For more information, see  [Private IP Addresses Per ENI Per Instance Type](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html#AvailableIpPerENI).
 
 Network interfaces per region:
 
-350
+>350
 
 This limit is the greater of either the default limit (350) or your On-Demand instance limit multiplied by 5. The default limit for On-Demand instances is 20. If your On-Demand instance limit is below 70, the default limit of 350 applies. You can increase the number of network interfaces per region by contacting AWS Support, or by increasing your On-Demand instance limit.
 
 Network ACLs per VPC:
 
-200
+>200
 
 You can associate one network ACL to one or more subnets in a VPC. This limit is not the same as the number of rules per network ACL.
 
 Rules per network ACL:
 
-20
+>20
 
 This is the one-way limit for a single network ACL, where the limit for ingress rules is 20, and the limit for egress rules is 20. This limit can be increased upon request up to a maximum if 40; however, network performance may be impacted due to the increased workload to process the additional rules.
 
 Active VPC peering connections per VPC:
 
-50
+>50
 
 If you need to increase this limit, contact AWS Support . The maximum limit is 125 peering connections per VPC. The number of entries per route table should be increased accordingly; however, network performance may be impacted.
 
 Outstanding VPC peering connection requests:
 
-25
+>25
 
 This is the limit for the number of outstanding VPC peering connection requests that you've requested from your account.
 
 Expiry time for an unaccepted VPC peering connection request:
 
-1 week (168 hrs)
+>1 week (168 hrs)
 
 VPC endpoints per region:
 
-20
+>20
 
 The maximum limit is 255 endpoints per VPC, regardless of your endpoint limit per region.
 
 Flow logs per single eni, single subnet, or single VPC in a region:
 
-2
+>2
 
 You can effectively have 6 flow logs per network interface if you create 2 flow logs for the subnet, and 2 flow logs for the VPC in which your network interface resides. This limit cannot be increased.
 
 NAT gateways per Availability Zone:
 
-5
+>5
 
 A NAT gateway in the pending, active, or deleting state counts against your limit.
 
