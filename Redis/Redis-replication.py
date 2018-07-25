@@ -64,7 +64,7 @@ def migrate_redis(source, destination):
             pass
     return
 
-
+# Run Method
 def run():
     parser = argparse.ArgumentParser()
     parser.add_argument('source', type=conn_string_type)
