@@ -1,5 +1,7 @@
 ## :sparkles: Helpful Links :sparkles:
 
+<iframe width="380" height="214" src="https://www.youtube.com/embed/EKaJENJqD8E?ecver=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
 <img align="right"  src="https://github.com/Girish400/AWS/blob/master/AWS%20Logo.png">
 
 >[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
