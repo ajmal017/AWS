@@ -74,17 +74,12 @@
 ***
 ### **Best Practices** 
 
--   Ensure all AWS EBS volumes for app tier are encrypted
+-   Use a drill-down monitoring approach
 
--   Ensure that existing Elastic Block Store (EBS) attached volumes are encrypted to meet security and compliance requirements.
+-   Collect and analyze data from all areas of your AWS environment
 
--   Ensure EBS volumes are encrypted with KMS CMKs in order to have full control over data encryption and decryption.
+-   Automate tasks  
 
--   Ensure that your Amazon EBS volume snapshots are not accessible to all AWS accounts
+-   Test systems at production and simulate common cloud occurrences 
 
--   Ensure AWS Elastic Block Store (EBS) volumes have recent snapshots available for point-in-time recovery.
-
--   Identify and remove old AWS Elastic Block Store (EBS) volume snapshots for cost optimization
-
--   Ensure all AWS EBS volumes for web tier are encrypted.
 ***
