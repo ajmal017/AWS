@@ -1,6 +1,6 @@
 [AWS Open Guide](https://github.com/open-guides/og-aws)
 
-[IAM](/AWS MD files/AWS/IAM.md) 
+[IAM](AWS/AWS%20MD%20files/IAM.md) 
 
 [EBS](/AWS/EBS.md)
 
