@@ -2,8 +2,6 @@
 
 [IAM](/AWS/AWS%20MD%20files/IAM.md) 
 
-[EBS](/AWS/AWS%20MD%20files/EBS.md)
-
 [Cloud Watch](/AWS/AWS%20MD%20files/CloudWatch.md)
 
 [Cloud Trail](/AWS/AWS%20MD%20files/CloudTrail.md)
@@ -24,13 +22,13 @@
 
 [ELB](/AWS/AWS%20MD%20files/ELB.md)
 
-[Lambda & API Gateway](/AWS/AWS%20MD%20files/Lambda.md)
+[EBS](/AWS/AWS%20MD%20files/EBS.md)
 
 [Security Group](/AWS/AWS%20MD%20files/SecurityGroup.md)
 
 [NACL](/AWS/AWS%20MD%20files/NACL.md)
 
-
+[Lambda & API Gateway](/AWS/AWS%20MD%20files/Lambda.md)
 
 ***
 [S3](/AWS/AWS%20MD%20files/S3.md)

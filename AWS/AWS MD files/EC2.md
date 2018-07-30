@@ -3,22 +3,29 @@
 ***
 ### **Definition** 
 
--   Amazon Elastic Block Store (Amazon EBS) provides persistent block storage volumes for use with Amazon EC2 instances in the AWS Cloud.
+-   Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides resizable compute capacity in the cloud. It is designed to make web-scale computing easier for developers.
+-   
 
 ***
 ### **IAM Features** 
 
--   **High Performance Volumes :** Choose between SSD-backed or HDD-backed volumes that can deliver the performance you need for your most demanding applications.
+-   **ELASTIC WEB-SCALE COMPUTING:**  Amazon EC2 enables you to increase or decrease capacity within minutes, not hours or days. You can commission one, hundreds, or even thousands of server instances simultaneously. You can also use Amazon EC2 Auto Scaling to maintain availability of your EC2 fleet and automatically scale your fleet up and down depending on its needs in order to maximize performance and minimize cost. To scale multiple services, you can use AWS Auto Scaling.
 
--   **Availability :** Each Amazon EBS volume is designed for 99.999% availability and automatically replicates within its Availability Zone to protect your applications from component failure
+-   **COMPLETELY CONTROLLED :** You have complete control of your instances including root access and the ability to interact with them as you would any machine. You can stop any instance while retaining the data on the boot partition, and then subsequently restart the same instance using web service APIs. Instances can be rebooted remotely using web service APIs, and you also have access to their console output.
 
--   **Encryption :** Amazon EBS encryption provides seamless support for data-at-rest and data-in-transit between EC2 instances and EBS volumes.
+-   **FLEXIBLE CLOUD HOSTING SERVICES :** You have the choice of multiple instance types, operating systems, and software packages. Amazon EC2 allows you to select a configuration of memory, CPU, instance storage, and the boot partition size that is optimal for your choice of operating system and application. For example, choice of operating systems includes numerous Linux distributions and Microsoft Windows Server.
 
--   **Access Management :** Amazon’s flexible access control policies allow you to specify who can access which EBS volumes ensuring secure access to your data.
+-   **INTEGRATED :** Amazon EC2 is integrated with most AWS services such as Amazon Simple Storage Service (Amazon S3), Amazon Relational Database Service (Amazon RDS), and Amazon Virtual Private Cloud (Amazon VPC) to provide a complete, secure solution for computing, query processing, and cloud storage across a wide range of applications.
 
--   **Snapshots :** Protect your data by creating point-in-time snapshots of EBS volumes, which are backed up to Amazon S3 for long-term durability.
+-   **RELIABLE :** Amazon EC2 offers a highly reliable environment where replacement instances can be rapidly and predictably commissioned. The service runs within Amazon’s proven network infrastructure and data centers. The Amazon EC2 Service Level Agreement commitment is 99.99% availability for each Amazon EC2 Region.
 
--   **Elastic Volumes :** Dynamically increase capacity, tune performance, and change the type of live EBS volumes. 
+-   **SECURE :** Cloud security at AWS is the highest priority. As an AWS customer, you will benefit from a data center and network architecture built to meet the requirements of the most security-sensitive organizations. Amazon EC2 works in conjunction with Amazon VPC to provide security and robust networking functionality for your compute resources.
+
+-   **INEXPENSIVE :** Amazon EC2 passes on to you the financial benefits of Amazon’s scale. You pay a very low rate for the compute capacity you actually consume. See Amazon EC2 Instance Purchasing Options for more details.
+
+-   **EASY TO START :** There are several ways to get started with Amazon EC2. You can use the AWS Management Console, the AWS Command Line Tools (CLI), or AWS SDKs. AWS is free to get started. To learn more, please visit our tutorials.
+
+
 ***
 ### **Important Points** 
 -   If you are using an Amazon EBS volume as a root partition, set the Delete on termination flag to "No" if you want your Amazon EBS volume to persist outside the life of the instance.
