@@ -7,7 +7,7 @@
 -   
 
 ***
-### **IAM Features** 
+### **EC2 Features** 
 
 -   **ELASTIC WEB-SCALE COMPUTING:**  Amazon EC2 enables you to increase or decrease capacity within minutes, not hours or days. You can commission one, hundreds, or even thousands of server instances simultaneously. You can also use Amazon EC2 Auto Scaling to maintain availability of your EC2 fleet and automatically scale your fleet up and down depending on its needs in order to maximize performance and minimize cost. To scale multiple services, you can use AWS Auto Scaling.
 
