@@ -6,7 +6,7 @@
 -   Amazon Elastic Compute Cloud (Amazon EC2) is a web service that provides resizable compute capacity in the cloud. It is designed to make web-scale computing easier for developers.
 ***
 ### **EC2 Features** 
-
+<p style="text-align: center;"> 
 -   **ELASTIC WEB-SCALE COMPUTING:**  Amazon EC2 enables you to increase or decrease capacity within minutes, not hours or days. You can commission one, hundreds, or even thousands of server instances simultaneously. You can also use Amazon EC2 Auto Scaling to maintain availability of your EC2 fleet and automatically scale your fleet up and down depending on its needs in order to maximize performance and minimize cost. To scale multiple services, you can use AWS Auto Scaling.
 
 -   **COMPLETELY CONTROLLED :** You have complete control of your instances including root access and the ability to interact with them as you would any machine. You can stop any instance while retaining the data on the boot partition, and then subsequently restart the same instance using web service APIs. Instances can be rebooted remotely using web service APIs, and you also have access to their console output.
@@ -23,7 +23,7 @@
 
 -   **EASY TO START :** There are several ways to get started with Amazon EC2. You can use the AWS Management Console, the AWS Command Line Tools (CLI), or AWS SDKs. AWS is free to get started. To learn more, please visit our tutorials.
 
-
+</p>
 ***
 ### **Important Points** 
 -   If you are using an Amazon EBS volume as a root partition, set the Delete on termination flag to "No" if you want your Amazon EBS volume to persist outside the life of the instance.
