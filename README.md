@@ -2,6 +2,7 @@
 
 <img align="right"  src="https://github.com/Girish400/AWS/blob/master/AWS%20Logo.png">
 
+>[AWS Open Guide](https://github.com/open-guides/og-aws)
 >[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
 >[Udemy - CloudGuru - Test](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
