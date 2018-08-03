@@ -117,3 +117,7 @@
 
 -   Root – Reduce or remove use of root.
 ***
+
+## Video Presentation About IAM Best Practices<a name="top-practices-video"></a>
+
+[![AWS Videos](http://img.youtube.com/vi/_wiGpBQGCjU/0.jpg)](http://www.youtube.com/watch?v=_wiGpBQGCjU)
