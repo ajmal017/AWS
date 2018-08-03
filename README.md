@@ -222,6 +222,17 @@ Lets you provision a logically isolated section of the AWS Cloud where you can l
     -   You can associate a single NACL with multiple subnets
     -   Each subnet in your VPC must be associated with a NACL. If you don't explicitly associate a subnet with an ACL, the subnet automatically gets associated with the default ACL
     -   You can block IP addresses using NACLs not Security Groups
+    
+    
+|Security Group  | Network ACL |
+|--|--|
+| Operates at the instance level | Operates at the subnet level |
+|Supports allow rules only|Supports allow rules and deny rules|
+|Is stateful: Return traffic is automatically allowed, regardless of any rules|Is stateless: Return traffic must be explicitly allowed by rules|
+|We evaluate all rules before deciding whether to allow traffic|We process rules in number order when deciding whether to allow traffic |
+|Applies to an instance only if someone specifies the security group when launching the instance, or associates the security group with the instance later on|Automatically applies to all instances in the subnets it's associated with|
+|
+   
 -   VPC Peering:
     -   Connection between two VPCs that enables you to route traffic between them using private IP addresses via a direct network route
     -   Instances in either VPC can communicate with each other as if they are within the same network
