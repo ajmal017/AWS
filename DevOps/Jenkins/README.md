@@ -21,8 +21,9 @@ Once you install Jenkins, you will need the temporary admin password to complete
 ```
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
-```
-Check for services running on 8080 before starting the Jenkins service.
 
+
+Check for services running on 8080 before starting the Jenkins service.
+```
 netstat -tulpn | grep 8080
 ```
