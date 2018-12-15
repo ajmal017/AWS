@@ -1,6 +1,5 @@
 
-[https://stockcharts.com](https://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi)
-
+# https://stockcharts.com/school/doku.php?id=chart_school:technical_indicators:relative_strength_index_rsi
 
 import numpy as np
 import helperpgm as h
