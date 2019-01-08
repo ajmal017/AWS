@@ -17,3 +17,8 @@ data = data[['average_price', 'buy_quantity', 'change',
        'oi_day_high', 'oi_day_low', 'sell_quantity', 'volume']]
 data.drop_duplicates(['last_price','volume'],keep= 'last').iloc[::-1]
 data.to_pickle('54290183.pkl')
+
+ohlc = data['last_price'].resample('5Min').ohlc()
+price = data['volume'].resample('5Min').sum()
+df_ohlc = pd.concat([ohlc,price], axis=1)
+df_ohlc
