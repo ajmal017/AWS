@@ -192,6 +192,8 @@ def Get_Stock_List_from_Nifty():
 
 
 def Get_Indian_Time():
+    #d1 = datetime.now() - timedelta(hours=5, minutes=30)
+    #d1.strftime("%Y-%m-%d  %I:%M:%S.%f")
     return pd.to_datetime((datetime.utcnow() - timedelta(hours=-5, minutes=-30)).strftime("%Y-%m-%d  %I:%M:%S.%f")) 
 
 
