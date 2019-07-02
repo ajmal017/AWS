@@ -3,6 +3,7 @@
 
 ## Git
 [github-cheat-sheet](https://github.com/tiimgreen/github-cheat-sheet)
+[Cheat Sheet](https://github.github.com/training-kit/downloads/github-git-cheat-sheet.pdf)
 
 ## Everyday Git in twenty commands or so
 ```sh
