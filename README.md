@@ -52,5 +52,9 @@
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
 
+ ### Book AWS Exam
+
+>[AWS Certification](https://www.aws.training/Certification)
+
 
 
