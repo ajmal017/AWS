@@ -45,7 +45,14 @@
 
 
   
-  
+ ### AWS Flashcards to Download
+
+>[Important Flashcards - 1](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
+
+>[Important Flashcards - 2](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%202.pdf)
+
+
+
  ### AWS Labs  
 
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
