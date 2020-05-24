@@ -16,6 +16,7 @@
 ### Cloud Guru   
 
 >[A Cloud Guru - Udemy Course (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
+>[A Cloud Guru - Udemy Course Notes](https://github.com/Girish400/AWS/tree/master/Course)
 
   
 ### Orion  
