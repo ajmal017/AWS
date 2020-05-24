@@ -37,7 +37,7 @@
 
 
 
-## AWS Labs
+## AWS Labs  :collision:
 
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
