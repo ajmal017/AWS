@@ -2,6 +2,12 @@
 
 <img align="right"  src="https://github.com/Girish400/AWS/blob/master/AWS%20Logo.png">
 
+## AWS 
+
+>[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
+
+>[AWS Official Documentation](https://aws.amazon.com/documentation/)
+
 >[AWS Open Guide](https://github.com/open-guides/og-aws)
 
 ## Cloud Guru
@@ -17,15 +23,19 @@
 >[Linux Academy - Orion (Thomas Haslett) ](http://bit.ly/2nB2gRi)
 
 
->[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
-
->[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
-
->[AWS 672 Exam Practice Questions - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
+## Practice Questions
 
 >[AWS Exam Practice Questions - Whizlabs.com](https://www.whizlabs.com/)
 
->[AWS Official Documentation](https://aws.amazon.com/documentation/)
+>[AWS 672 Exam Practice Questions - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
+
+
+## AWS Labs
+
+>[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
+
+
+##
 
 ---
 [IAM](https://drive.google.com/file/d/1-u25Y-0zQZqElqZ5ZiNI2in-7Bz2INx5/view)
