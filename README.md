@@ -19,13 +19,6 @@
 
 >[A Cloud Guru - Udemy Course (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
->[A Cloud Guru - Flashcards](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
-
->[A Cloud Guru - Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
-
-
-  
-  
   
 ### Orion  
 
@@ -43,14 +36,17 @@
 
 >[O'reilly Practice Tests](https://www.oreilly.com/library/view/aws-certified-solutions/9781119558439/)
 
-
+>[A Cloud Guru - Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
   
+ 
+ 
  ### AWS Flashcards to Download
+
+>[A Cloud Guru - Flashcards](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
 
 >[Important Flashcards - 1](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
 
 >[Important Flashcards - 2](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%202.pdf)
-
 
 
  ### AWS Labs  
