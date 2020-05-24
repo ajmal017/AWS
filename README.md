@@ -20,12 +20,6 @@
 
 >[AWS Official Documentation](https://aws.amazon.com/documentation/)
 
-> [GitHub Link for AWS notes](https://github.com/agasthik/aws-csa-2017#aws-csa-2017-study-guide)
-
->[Docker Repo for DockerFiles](https://github.com/jessfraz/dockerfiles)
-
-> [MD File Editor](https://stackedit.io)
-
 ---
 [IAM](https://drive.google.com/file/d/1-u25Y-0zQZqElqZ5ZiNI2in-7Bz2INx5/view)
 
