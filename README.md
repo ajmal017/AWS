@@ -42,11 +42,11 @@
  
  ### AWS Flashcards to Download
 
->[A Cloud Guru - Flashcards](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
+>[Flashcards - A Cloud Guru](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
 
->[Important Flashcards - 1](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
+>[Flashcards - Anthony](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
 
->[Important Flashcards - 2](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%202.pdf)
+>[Flashcards - Thomas](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%202.pdf)
 
 
  ### AWS Labs  
