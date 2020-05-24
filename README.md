@@ -6,7 +6,7 @@
 
 >[Udemy - CloudGuru (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
->[Flashcards - A Cloud Guru: AWS Solutions Architect-Associate Exam Flashcards](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
+>[Flashcards - A Cloud Guru: AWS Solutions Architect-Associate](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
 
 >[Udemy - CloudGuru Associate Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
 
