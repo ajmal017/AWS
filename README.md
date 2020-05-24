@@ -12,7 +12,7 @@
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
->[AWS Labs](https://qwiklabs.com/catalog?cloud=AWS)
+>[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
 >[AWS 672 Exam Practice Questions - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
 
