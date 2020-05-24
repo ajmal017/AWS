@@ -8,7 +8,7 @@
 
 >[Udemy - CloudGuru - Test](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
 
->[Linux Academy - Orion ](http://bit.ly/2nB2gRi)
+>[Linux Academy - Orion (Thomas Haslett) ](http://bit.ly/2nB2gRi)
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
