@@ -44,8 +44,7 @@
 
   
   
-  
-###  AWS Labs  
+ ### AWS Labs  
 
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
