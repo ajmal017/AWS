@@ -15,11 +15,11 @@
 
 ### Cloud Guru   :star:
 
->[A CloudGuru Udemy Course (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
+>[A Cloud Guru - Udemy Course (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
 >[A Cloud Guru - Flashcards](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
 
->[A CloudGuru - Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
+>[A Cloud Guru - Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
 
 
 
