@@ -4,7 +4,7 @@
 
 >[AWS Open Guide](https://github.com/open-guides/og-aws)
 
-## :white_check_mark: Cloud Guru
+## Cloud Guru
 
 >[Udemy - CloudGuru (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
@@ -12,7 +12,10 @@
 
 >[Udemy - CloudGuru Associate Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
 
+## Orion
+
 >[Linux Academy - Orion (Thomas Haslett) ](http://bit.ly/2nB2gRi)
+
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
