@@ -3,7 +3,7 @@
 <img align="right"  src="https://github.com/Girish400/AWS/blob/master/AWS%20Logo.png">
 
 
-## AWS 
+## AWS   :heart:
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
@@ -23,7 +23,7 @@
 
 
 
-## Orion
+## Orion  :star2:
 
 >[Linux Academy - Orion (Thomas Haslett) ](http://bit.ly/2nB2gRi)
 
