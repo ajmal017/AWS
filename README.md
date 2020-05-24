@@ -3,7 +3,7 @@
 <img align="right"  src="https://github.com/Girish400/AWS/blob/master/AWS%20Logo.png">
 
 
-### AWS   :heart:
+### :heart: AWS   
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
@@ -15,7 +15,7 @@
   
   
   
-### Cloud Guru   :star:
+### :star: Cloud Guru   
 
 >[A Cloud Guru - Udemy Course (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
@@ -27,7 +27,7 @@
   
   
   
-### Orion  :star2:
+### :star2: Orion  
 
 >[Linux Academy - Orion (Thomas Haslett) ](http://bit.ly/2nB2gRi)
 
@@ -35,7 +35,7 @@
   
   
   
-### Practice Questions  :notes:
+### :notes: Practice Questions  
 
 >[Exam Practice Questions - Whizlabs.com](https://www.whizlabs.com/)
 
@@ -45,7 +45,7 @@
   
   
   
-### AWS Labs  :collision:
+### :collision:  AWS Labs  
 
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
