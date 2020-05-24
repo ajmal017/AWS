@@ -4,7 +4,7 @@
 
 >[AWS Open Guide](https://github.com/open-guides/og-aws)
 
->[Udemy - CloudGuru](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
+>[Udemy - CloudGuru (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
 >[Udemy - CloudGuru - Test](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
 
