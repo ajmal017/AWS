@@ -13,7 +13,7 @@
 
 
 
-## Cloud Guru
+## Cloud Guru   :star:
 
 >[Udemy - CloudGuru (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
