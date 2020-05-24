@@ -6,7 +6,7 @@
 
 >[Udemy - CloudGuru (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
->[Udemy - CloudGuru - Test](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
+>[Udemy - CloudGuru Associate Practice Tests](https://www.udemy.com/aws-certified-solutions-architect-associate-practice-tests/learn/v4/content)
 
 >[Linux Academy - Orion (Thomas Haslett) ](http://bit.ly/2nB2gRi)
 
