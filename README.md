@@ -31,9 +31,9 @@
 
 ## Practice Questions  :notes:
 
->[AWS Exam Practice Questions - Whizlabs.com](https://www.whizlabs.com/)
+>[Exam Practice Questions - Whizlabs.com](https://www.whizlabs.com/)
 
->[AWS 672 Exam Practice Questions - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
+>[672 Exam Practice Questions - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
 
 
 
