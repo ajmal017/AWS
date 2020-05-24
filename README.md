@@ -14,9 +14,9 @@
 
 >[AWS Labs](https://qwiklabs.com/catalog?cloud=AWS)
 
->[AWS 672 Questions](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
+>[AWS 672 Exam Practice Questions](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
 
->[AWS Practice Questions](https://www.whizlabs.com/)
+>[AWS Exam Practice Questions - Whizlabs.com](https://www.whizlabs.com/)
 
 >[AWS Official Documentation](https://aws.amazon.com/documentation/)
 
