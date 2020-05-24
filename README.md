@@ -14,6 +14,8 @@
 
 >[AWS Labs](https://qwiklabs.com/catalog?cloud=AWS)
 
+>[AWS 600 Questions](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/hello.pdf)
+
 >[AWS Practice Questions](https://www.whizlabs.com/)
 
 >[AWS Official Documentation](https://aws.amazon.com/documentation/)
