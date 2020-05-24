@@ -4,6 +4,8 @@
 
 >[AWS Open Guide](https://github.com/open-guides/og-aws)
 
+## :heavy_check_mark: Cloud Guru
+
 >[Udemy - CloudGuru (Ryan Kroonenburg)](https://www.udemy.com/aws-certified-solutions-architect-associate/learn/v4/content)
 
 >[Flashcards - A Cloud Guru: AWS Solutions Architect-Associate](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
