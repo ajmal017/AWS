@@ -7,9 +7,7 @@
 
 >[AWS CSA BluePrint](http://awstrainingandcertification.s3.amazonaws.com/production/AWS_certified_solutions_architect_associate_blueprint.pdf)
 
->[AWS Official Documentation](https://aws.amazon.com/documentation/)
-
->[AWS Open Guide](https://github.com/open-guides/og-aws)
+>[Exam Readiness: AWS Certified Solutions Architect – Associate](https://www.aws.training/Details/Curriculum?id=20685)
 
 
   
