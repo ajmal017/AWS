@@ -54,9 +54,14 @@
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
 
- ### Book AWS Exam
+ ### AWS Certification Website
 
->[AWS Certification](https://www.aws.training/Certification)
+>[AWS Certification Website](https://www.aws.training/Certification)
 
+
+
+### Study Guide
+
+>[AWS Certified Solutions Architect Official Study Guide](https://github.com/itspawanbhardwaj/AWS-Certified-Solutions-Architect-Associate-2019/blob/master/book/AWS-Certified-Solutions-Architect-Official-Study-Guide.pdf.pdf)
 
 
