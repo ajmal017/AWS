@@ -40,7 +40,7 @@
   
  
  
- ### AWS Flashcards to Download
+ ### Flashcards to Download
 
 >[Flashcards - Anthony](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
 
@@ -49,12 +49,12 @@
 >[Flashcards - A Cloud Guru](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
 
 
- ### AWS Labs  
+ ### Lab
 
 >[AWS Labs - Qwiklabs.com](https://qwiklabs.com/catalog?cloud=AWS)
 
 
- ### AWS Certification Website
+ ### Certification Website
 
 >[AWS Certification Website](https://www.aws.training/Certification)
 
