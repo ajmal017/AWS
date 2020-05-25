@@ -61,7 +61,7 @@
 
  ### Whitepapers & Guides
 
->[AWS CWhitepapers & Guides](https://aws.amazon.com/whitepapers)
+>[AWS Whitepapers & Guides](https://aws.amazon.com/whitepapers)
 
 
 
