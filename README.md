@@ -59,6 +59,11 @@
 >[AWS Certification Website](https://www.aws.training/Certification)
 
 
+ ### Whitepapers & Guides
+
+>[AWS CWhitepapers & Guides](https://aws.amazon.com/whitepapers)
+
+
 
 ### Study Guide
 
