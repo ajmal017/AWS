@@ -42,9 +42,9 @@
  
  ### Flashcards 
 
->[Flashcards by Anthony - Download](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
+>[Flashcards by Anthony - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%201.pdf)
 
->[Flashcards by Thomas - Download](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%202.pdf)
+>[Flashcards by Thomas - Download PDF](https://github.com/Girish400/AWS/blob/master/AWS/AWS%20MD%20files/Flash%20Cards%202.pdf)
 
 >[Flashcards - A Cloud Guru](https://www.brainscape.com/packs/a-cloud-guru-aws-solutions-architect-associate-exam-8796087)
 
