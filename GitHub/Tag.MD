@@ -1,10 +1,6 @@
 ## Tags   
 
-Tags are ref's that point to specific points in Git history. Tagging is generally used to capture a point in history that is used for a marked version release (i.e. v1.0.1). A tag is like a branch that doesn’t change. 
-
-## Tags vs Branches  
-Both tags and branches point to a commit, they are thus aliases for a specific hash and will save you time by not requiring to type in a hash.
-The difference between tags and branches are that a branch always points to the top of a development line and will change when a new commit is pushed whereas a tag will not change. Thus tags are more useful to "tag" a specific version and the tag will then always stay on that version and usually not be changed.
+- Git has the ability to tag specific points in a repository’s history as being important. Typically, people use this functionality to mark release points (v1.0, v2.0 and so on)A tag is like a branch that doesn’t change. 
 
 - Git supports two different types of tags, annotated and lightweight tags
 
@@ -127,3 +123,6 @@ git push origin --delete v2.4-lightweight
 - To push multiple tags, you can use the --tags option to the push command.
 - Tagger name and Commit Author name can be different
 
+## Tags vs Branches  
+Both tags and branches point to a commit, they are thus aliases for a specific hash and will save you time by not requiring to type in a hash.
+The difference between tags and branches are that a branch always points to the top of a development line and will change when a new commit is pushed whereas a tag will not change. Thus tags are more useful to "tag" a specific version and the tag will then always stay on that version and usually not be changed.
