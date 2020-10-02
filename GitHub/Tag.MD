@@ -117,9 +117,7 @@ git push origin --delete v2.4-lightweight
 - both lightweight and annotated tags are a file under .git/refs/tags that contains a SHA-1
 - annotated tags point to a tag object in the object database.
 - Determine if a tag is annotated:
-  ```
-  git cat-file -t tag
-
+  ```  git cat-file -t tag
   ```
 - If knowing who tagged what and when is relevant for you, then use annotated tags. If you just want to tag a specific point in your development, no matter who and when did that, then lightweight tags are good enough.
 - git push --follow-tags will only push annotated tags
